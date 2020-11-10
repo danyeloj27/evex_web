@@ -1,0 +1,60 @@
+﻿@{
+    ViewBag.Title = "Blacklist";
+    Layout = "~/mainPage.cshtml";
+}
+<div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlerta">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <label id="msg1" style="font-weight: bold; padding-left: 15px;"></label>
+                </div>
+                <div class="row">
+                    <label id="msg2" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                </div>
+                <div>
+                    <label id="msg3" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptarMensaje" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        BLACK LIST
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+<!--Pantalla Principal-->
+
+<div class="row" style="margin-top: 25px; margin-left:15px; margin-right: 15px;">
+    <div class="container" style="padding-top: 0px;">
+        <table id="tbl-blacklist" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+        </table>
+    </div>
+</div>
+

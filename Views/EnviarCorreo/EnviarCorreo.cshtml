@@ -1,0 +1,151 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "EnviarCorreo";
+    Layout = "~/mainPage.cshtml";
+}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="enviandoCorreo">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <label id="msgCorreoEnviado" style="padding-left: 15px; text-align:center; width: 100%;">Enviando Correo</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="aceptarEnviarCorreo" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+
+        </div><!-- /.modal -->
+    </div>
+
+<div id="listaDestinatarios" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">SELECCIONAR DESTINATARIO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row" style="margin-left: 0px;">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                            <label class="form-check-label" for="inlineCheckbox1">CC Propietarios y Titulares</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="container" style="padding-top: 5px;">
+                            <table id="tbl-destinatarios" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <div class="col-md-10"></div>
+                        <div class="col-md-1" style="padding-right: 0px;">
+                            <button id="cerrarDestinatarios" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                        </div>
+                        <div class="col-md-1" style="padding-right: 0px;">
+                            <button id="cargarDestinatarios" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem; width: 100%; padding-left: 6px; padding-right: 6px;">Aceptar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        ENVÍO DE CORREO
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div>
+    <div class="card" style="margin-top: 25px; margin-bottom: 5px; margin-left:10%; margin-right:10%;">
+        <div class="card-header">
+            <a class="card-link">
+                <p class="font-weight-bold"></p>
+            </a>
+        </div>
+        <div class="card-body">
+            <form id="datosCorreo">
+                <div class="form-group">
+                    <label for="validationDefault01" class=" col-form-label">Destinatario:</label>
+                    <fieldset id="opcionesEnvio">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="todoMovil" name="example" checked="checked" value="Todos">
+                            <label class="custom-control-label" for="todoMovil">Todos</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="conductorMovil" name="example" value="Conductores">
+                            <label class="custom-control-label" for="conductorMovil">Conductores</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="propietarioMovil" name="example" value="Propietarios/Titulares">
+                            <label class="custom-control-label" for="propietarioMovil">Propietarios/Titulares</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="seleccioneMovil" name="example" value="Seleccione">
+                            <label class="custom-control-label" for="seleccioneMovil">Seleccione</label>
+                        </div>
+                    </fieldset>
+                    <div id="correosSeleccionados" style="margin-top: 10px; display: none;" class="input-group mb-3">
+                        <input type="text" class="form-control" placeholder="Ej. ecotrans@ecotranschile.cl" name="Destino" autofocus id="destinoCorreo" disabled>
+                        <div class="input-group-append" style="height:28px;">
+                            <button id="buscarDestinatario" data-toggle="modal" data-target="#listaDestinatarios" class="btn btn-success" type="button" style="font-size: 0.85rem; padding-top: 2px;">Buscar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="validationDefault01">Tipo:</label>
+                    <select id="tipoCorreo" name="Tipo" class="custom-select form-control">
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="validationDefault01" class="col-form-label">Asunto:</label>
+                    <input class="form-control" placeholder="Ej.: IMPORTANTE" name="Asunto" type="text" autofocus id="asuntoCorreo" style="text-transform: none;">
+                </div>
+                <div class="form-group">
+                    <label for="validationDefault01" class="col-form-label">Mensaje:</label>
+                    <textarea class="form-control" style="font-size: 0.85rem;" placeholder="Escriba su Mensaje" type="text" name="Mensaje" id="mensajeCorreo" rows="3"></textarea>
+                </div>
+            </form>
+            @using (Html.BeginForm("Subir", "EnviarCorreo", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+
+            }
+            <p id="fp"></p>
+        </div>
+        <div class="row" style="margin-top: 10px;">
+            <div class="col-md-10">
+                <input multiple type="file" name="file" id="archivoCorreo" />
+            </div>
+            <div class="col-md-2">
+                <button id="enviarCorreo" style="font-size: 0.85rem; padding-top: 2px; width: 100%;" type="submit" class="btn btn-lg btn-success btn-block" disabled><i class="fas fa-envelope"></i> Enviar</button>
+            </div>
+        </div>
+    </div>
+</div>

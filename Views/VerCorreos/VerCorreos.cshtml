@@ -1,0 +1,61 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "VerCorreos";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="correoEnviado">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <label id="msgCorreoEnviado" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="enviarCorreoNuevo" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlerta">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="mensajeCorreo">Mensaje</label>
+                    <textarea class="form-control" id="mensajeCorreo" rows="3"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="copiarTexto"class="btn btn-info" data-dismiss="modal">Copiar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+
+<div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+    <div class="container" style="padding-top: 0px;">
+        <table id="tbl-CorreosEnviados" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+        </table>
+    </div>
+</div>

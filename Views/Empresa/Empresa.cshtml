@@ -1,0 +1,657 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "Empresa";
+    Layout = "~/mainPage.cshtml";
+}
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlertaEstadoEmpresa">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <label id="msg1" style="font-weight: bold; padding-left: 15px;"></label>
+                </div>
+                <div class="row">
+                    <label id="msg2" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                </div>
+                <div>
+                    <label id="msg3" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptarMensajeEstadoEmpresa" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        INGRESO DE CONVENIOS
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div id="listaEmpresa" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="col-md-10" style="padding: 0px 5px 0px 0px;">
+                    <div class="form-group">
+
+                    </div>
+                </div>
+            </div>
+            <div id="accordion" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="card" style="margin-bottom: 5px;">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOneEmpresa">
+                            <p class="font-weight-bold">DATOS DE LA EMPRESA</p>
+                        </a>
+                    </div>
+                    <div id="collapseOneEmpresa" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <form>
+
+                                <div class="row">
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Codigo</label>
+                                            <input class="form-control" id="codConvenio" autocomplete="off" maxlength="6" autofocus onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Rut</label>
+                                            <input class="form-control" id="rutConvenio" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutEmpresa(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Razon Social</label>
+                                            <input class="form-control" id="razonConvenio" autocomplete="off" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Nombre Fantasia</label>
+                                            <input class="form-control" id="fantasiaConvenio" autocomplete="off" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Tipo:</label>
+                                            <select id="naturalezaConvenio" class="custom-select form-control" onfocusout="checkVacioCombo(this)">
+                                                <option selected="selected" disabled>Seleccione</option>
+                                                <option>PÚBLICA</option>
+                                                <option>PRIVADA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Direccion</label>
+                                            <input class="form-control" id="direccionConvenio" autocomplete="off" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Comuna</label>
+                                            <select id="comunaConvenio" name="Tipo" class="custom-select form-control" onfocusout="checkVacioCombo(this)"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Telefono</label>
+                                            <input class="form-control" id="telefonoConvenio" autocomplete="off" type="text" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Representante Legal</label>
+                                            <input class="form-control" id="representanteConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Cargo</label>
+                                            <input class="form-control" id="cargoConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Inicio</label>
+                                            <input class="form-control" id="inicioConvenio" autocomplete="off" name="date" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Termino</label>
+                                            <input class="form-control" id="terminoConvenio" autocomplete="off" name="date" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Min. Solicitud</label>
+                                            <input class="form-control" id="minSolicitudConvenio" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Min. Alerta Solicitud</label>
+                                            <input class="form-control" id="minAlertaSolicitudConvenio" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Min. Alerta Planificacion</label>
+                                            <input class="form-control" id="minAlertaPlanificacionConvenio" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Direccion Envio Documentos</label>
+                                            <input class="form-control" id="direccionDocumentoConvenio" autocomplete="off" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Periodo de Facturacion</label>
+                                            <input class="form-control" id="periodoFacturacionConvenio" autocomplete="off" type="text" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Plantilla Cobro</label>
+                                            <select id="plantillaCobroConvenio" class="custom-select form-control" onfocusout="checkVacioCombo(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <hr class="style1" style="margin-top: 0px;">
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Obs. de Operaciones</label>
+                                            <input class="form-control" id="observacionOperacionesConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+
+                                    <hr class="style1" style="margin-top: 0px;">
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Obs. de Administracion</label>
+                                            <input class="form-control" id="observacionAdministracionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+
+                                    <hr class="style1" style="margin-top: 0px;">
+
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Obs. de Conductores</label>
+                                            <input class="form-control" id="observacionConductoresConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Pagina Web</label>
+                                            <input class="form-control" id="webConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Correo Electronico</label>
+                                            <input class="form-control" id="correoConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Empresa Padre</label>
+                                            <select id="holdingConvenio" name="Tipo" class="custom-select form-control" onfocusout="checkVacioCombo(this)"></select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px;">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseTwoEmpresa">
+                            <p class="font-weight-bold">DATOS DE FACTURACIÓN Y FINANZAS</p>
+                        </a>
+                    </div>
+                    <div id="collapseTwoEmpresa" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Condición de Pago:</label>
+                                            <select id="condicionPagoConvenio" class="custom-select form-control" onfocusout="checkVacioCombo(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Tipo de Documento:</label>
+                                            <select id="documentoPagoConvenio" class="custom-select form-control" onfocusout="checkVacioCombo(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Contacto de Facturación</label>
+                                            <input class="form-control" id="contactoFacturacionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Correo</label>
+                                            <input class="form-control" id="correoContactoFacturacionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Teléfono</label>
+                                            <input class="form-control" id="telefonoContactoFacturacionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Contacto de Administración</label>
+                                            <input class="form-control" id="contactoAdministracionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Correo</label>
+                                            <input class="form-control" id="correoContactoAdministracionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Teléfono</label>
+                                            <input class="form-control" id="telefonoContactoAdministracionConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Ejecutivo del Convenio</label>
+                                            <input class="form-control" id="ejecutivoConvenio" autocomplete="off" />
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="card" style="margin-bottom: 5px;">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThreeEmpresa">
+                            <p class="font-weight-bold">CONFIGURACION DE LA EMPRESA</p>
+                        </a>
+                    </div>
+                    <div id="collapseThreeEmpresa" class="collapse" data-parent="#accordion">
+                        <div class="card-body" style="padding-left: 60px;">
+                            <div class="row">
+                                <div id="filaPA" class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="procesoAutomatico" value="Procesa_Automatico" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="procesoAutomatico" style="padding-left: 10px;">Proceso Automático</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="requiereCentroCosto" value="Centro_Costo" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="requiereCentroCosto" style="padding-left: 10px;">Requiere Centro de Costo</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="requiereArea" value="Area" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="requiereArea" style="padding-left: 10px;">Requiere Área</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="rutPasajero" value="Rut_Pasajeros" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="rutPasajero" style="padding-left: 10px;">Requiere RUT Pasajero</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="apruebaPrefactura" value="Cliente_Prefactura" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="apruebaPrefactura" style="padding-left: 10px;">Cliente Aprueba Prefactura</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="objetaServicios" value="Objetar_Servicio" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="objetaServicios" style="padding-left: 10px;">Permitir Objetar Servicios</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="valeOriginal"value="Vale_Original" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="valeOriginal" style="padding-left: 10px;">Utiliza Vale Original</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="firmaVale" value="Firma_Vale" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="firmaVale" style="padding-left: 10px;">Firma Vale del Móvil</label>
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="valeDigital" value="Vale_Digital" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="valeDigital" style="padding-left: 10px;">Utiliza Vale Digital</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-check form-check-inline">
+                                        <input class="switchdemo" type="checkbox" id="fonoConductor" value="Mostrar_Fono_Conductor" onchange="checkValor(this)">
+                                        <label class="form-check-label" for="fonoConductor" style="padding-left: 10px;">Mostrar Fono Conductor</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <p class="font-weight-bold" style="margin-top: 20px; margin-left: 20px;">CAMPOS PERSONALIZABLES</p>
+                            </div>
+                            <div class="col-md-7"></div>
+                            <div class="col-md-2" style="padding-right: 22px;">
+                                <!--<button id="nuevoCampo" type="button" class="btn btn-info" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal" data-target="">Nuevo Campo</button>-->
+                            </div>
+                            <div class="panel-body" style="padding: 5px 20px 20px 20px; width: 100%;">
+                                <table id="tbl-camposPerzonalizados" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>ACCIÓN</th>
+                                            <th>CÓDIGO</th>
+                                            <th>NOMBRE</th>
+                                            <th>TIPO</th>
+                                            <th>VALORES</th>
+                                            <th>VALIDAR</th>
+                                            <th>ESTADO</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                        </div>
+                </div>
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <button id="guardarEmpresa" type="button" class="btn btn-info" style="margin-right:5px; font-size:0.85rem;">Guardar</button>
+                    <button id="cerrarModalEmpresa" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem;">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="datosCamposPersolaizables" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="collapsed card-link">
+                        <p class="font-weight-bold">RESGISTRO CAMPOS PERSONALIZABLES</p>
+                    </a>
+                </div>
+                <div id="registroCampos" class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Código</label>
+                                    <input class="form-control" id="codigoCampo" autocomplete="off" maxlength="8" desabled onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Descripción</label>
+                                    <input class="form-control" id="descripcionCampo" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Tipo</label>
+                                    <select style="padding-left: 0px;" class="form-control" id="tipoCampo" autocomplete="off" onfocusout="checkVacio(this)">
+                                        <option selected="selected" disabled>Seleccione</option>
+                                        <option value="VALOR">VALOR</option>
+                                        <option value="LISTA">LISTA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valores</label>
+                                    <input class="form-control" id="valoresCampo" autocomplete="off" onfocusout="checkVacio(this)" >
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Validar</label>
+                                    <select style="padding-left: 0px;" class="form-control" id="validarCampo" autocomplete="off" onfocusout="checkVacio(this)">
+                                        <option selected="selected" disabled>Seleccione</option>
+                                        <option value="SI">SI</option>
+                                        <option value="NO">NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="cerrarCamposPersolaizables" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="guardarCamposPersolaizables" type="button" class="btn btn-info" style="margin-bottom: 20px; font-size: 0.85rem; width: 100%;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaCamposVaciosEmpresa" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label id="mensajeVacioEmpresa"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal" >Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaRutEmpresa" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>RUT Inválido</label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerraralertaRutEmpresa" type="button" class="btn btn-danger">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaConvenioRegistrado" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>Este convenio ya se encuentra registrado</label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarAlertaConvenioRegistrado"type="button" class="btn btn-danger">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaConvenioRegistrado1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <label style="text-align:center; width: 100%;">Este convenio ya se encuentra registrado con el código:</label>
+                </div>
+                <div class="row">
+                    <label id="mensajeCodigoEmpresa" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarAlertaConvenioRegistrado1" type="button" class="btn btn-danger">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalCambioEstadoEmpresa" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">INDIQUE UN MOTIVO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <label for="">Detalle el motivo por el cual está realizando el cambio de Estado</label>
+                        <div class="input-group">
+                            <textarea id="motivoCambioEstadoEmpresa" type="text" rows="3" class="form-control" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <button id="guardarCambioEstadoEmpresa" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                        <button id="cerrarCambioEstadorEmpresa" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem;">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlertaEstadoRegla">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <label id="msgregla1" style="font-weight: bold; padding-left: 15px;"></label>
+                </div>
+                <div class="row">
+                    <label id="msgregla2" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                </div>
+                <div>
+                    <label id="msgregla3" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptarmensajeAlertaEstadoRegla" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+
+<!--Pantalla Principal-->
+
+    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+        <div class="col-md-9" style="padding: 0px 5px 0px 0px;">
+        </div>
+        <div class="col-md-2" style="padding: 0px 0px 0px 0px; margin-left: 6px; padding-left: 45px; padding-right: 10px;">
+            <button id="nuevaEmpresa" type="button" class="btn btn-success" data-dismiss="modal" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal" data-target="#listaEmpresa"><i class="fas fa-plus"></i> Nueva Empresa</button>
+        </div>
+        <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+        <div class="container" style="padding-top: 0px;">
+            <table id="tbl-empresas" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+            </table>
+        </div>
+    </div>
+
+
+
+

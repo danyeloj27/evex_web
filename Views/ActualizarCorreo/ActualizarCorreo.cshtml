@@ -1,0 +1,110 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "ActualizarCorreo";
+    Layout = "~/mainPage.cshtml";
+}
+
+    <div>
+        <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+            <div class="col-md-8">
+                <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+                <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+                <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+            </div>
+            <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+                <label id="#ruta">Bienvenido(a)</label>
+                <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+                <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </div>
+
+<!--Modal Motivo-->
+<div class="modal fade" tabindex="-1" role="dialog" id="motivo" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Motivo</h5>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <fieldset id="example">
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="interna" name="example" value="internas">
+                            <label class="custom-control-label" for="interna">Internas</label>
+                        </div>
+                        <div class="custom-control custom-radio custom-control-inline">
+                            <input type="radio" class="custom-control-input" id="externa" name="example" value="externas">
+                            <label class="custom-control-label" for="externa">Externas</label>
+                        </div>
+                    </fieldset>
+                    <br />
+                    <select class="form-control" id="sel"></select>
+                    <br />
+                    <textarea class="form-control" rows="5" id="motivotexto"></textarea>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <!--<button type="submit" id="cancelarMotivo" class="btn btn-default" data-dismiss="modal">Cancelar</button> -->
+                <button type="submit" id="guardarMotivo" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        CONFIGURAR ENVÍO DE CORREOS
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card" style="animation-delay: 1.5s;">
+    <div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
+        <div class="panel-body" style="padding-top: 0px; width: 100%;">
+            <div id="tooltip"></div>
+            <table id="tbl-factoringcorreo" class="table table-striped table-bordered table-hover customtable" cellspacing="0" style="width:100%">
+                <thead>
+                    <tr>
+                        <th>Envía Correo</th>
+                        <th>N° Factura</th>
+                        <th>Días</th>
+                        <th>Emisión</th>
+                        <th>Vencimiento</th>
+                        <th>Factoring</th>
+                        <th>Razón Social</th>
+                        <th>RUT</th>
+                        <th>Monto</th>
+                        <th>Tipo</th>
+                        <th>Nombre</th>
+                        <th>Observaciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script>
+    function detalleFactoring(nfactura, envia, tipoe, nombree, observacione) {
+        var tblArr1 = [];
+        var tblData = {
+            Num_Factura: "",
+            Envia_Correo: "",
+            Tipo_Entidad: "",
+            Nombre_Entidad: "",
+            Observacion_Entidad: ""
+        };
+        tblData.Num_Factura = nfactura;
+        tblData.Envia_Correo = envia;
+        tblData.Tipo_Entidad = tipoe;
+        tblData.Nombre_Entidad = nombree;
+        tblData.Observacion_Entidad = observacione;
+        tblArr1.push(tblData);
+        return JSON.stringify(tblArr1);
+    };
+</script>
+

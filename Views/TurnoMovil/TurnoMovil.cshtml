@@ -1,0 +1,70 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "TurnoMovil";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        TURNOS POR GRUPO
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row" style="padding:20px 20px 20px 20px;">
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="codMovil">MÓVIL</label>
+                    <select id="codMovilTurno" name="Tipo" class="custom-select form-control" style="height:32px;">
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-right: 20px;">
+            <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px; width: 100%;">
+                <table class="table table-bordered table-striped mb-0 customtable" id="tbl-turnosMovil">
+                    <thead>
+                        <tr>
+                            <th>ENE</th>
+                            <th>FEB</th>
+                            <th>MAR</th>
+                            <th>ABR</th>
+                            <th>MAY</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AGO</th>
+                            <th>SEP</th>
+                            <th>OCT</th>
+                            <th>NOV</th>
+                            <th>DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

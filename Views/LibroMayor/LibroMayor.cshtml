@@ -1,0 +1,176 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "LibroMayor";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaLibroVacios">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que no haya dejado campos vacíos
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaFechaVacios">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que la fecha de inicio sea mayor que la fecha final
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        LIBRO MAYOR
+    </div>
+    <div class="col-md-1 triangle-bottomleft d-none d-sm-block">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card" style="animation-delay: 1.5s;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="codigoMovilLibro">Móvil:</label>
+                    <select id="codigoMovilLibro" class="custom-select form-control">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Incio</label>
+                    <input class="form-control" id="dateInicioLibro" maxlength="10" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Fin</label>
+                    <input class="form-control" id="dateFinLibro" maxlength="10" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                </div>
+            </div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="" style="color: white;">.</label>
+                    <button type="button" id="buscarLibro" class="btn btn-success" data-toggle="modal" style="width: 100%; font-size: 0.85rem; padding-top: 3px;padding-bottom: 4px;"><i class="fa fa-search"></i> Buscar</button>
+                </div>
+            </div>
+        </div>
+        <div class="movilLibroMayor">
+            <div class="row">
+                <label for="codigoContable" style="font-weight: bold;">CÓDIGO </label>
+                <label id="codigoContable"></label>
+            </div>
+            <div class="row">
+                <label for="nombreMovil" style="font-weight: bold;">NOMBRE </label>
+                <label id="nombreMovil"></label>
+            </div>
+            <div class="row">
+                <label for="direccionMovil" style="font-weight: bold;">DIRECCIÓN </label>
+                <label id="direccionMovil"></label>
+            </div>
+            <div class="row">
+                <label for="telefonoMovil" style="font-weight: bold;">TELÉFONO </label>
+                <label id="telefonoMovil"></label>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-right: 20px; margin-top: 25px;">
+            <div style="padding-top: 0px; max-width: 100%">
+                <table id="tbl-libro1" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+                </table>
+            </div>
+        </div>
+        <div class="row" id="" style="padding-left: 20px; padding-right: 20px; margin-top: 25px;">
+            <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px; width: 100%;">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered table-striped mb-0 customtable" id="tbl-libro">
+                        <thead>
+                            <tr>
+                                <th>EMISIÓN</th>
+                                <th>TIPO DOC.</th>
+                                <th>NUM DOC.</th>
+                                <th>VENCIM.</th>
+                                <th>DOC. TIPO</th>
+                                <th>NRO. REF.</th>
+                                <th>CPBTE N</th>
+                                <th>FEC. CPBTE</th>
+                                <th>DESCRIPCIÓN</th>
+                                <th>DEBE</th>
+                                <th>HABER</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="nolibro" style="padding-left: 20%; padding-right: 20%; margin-top: 5px; display: none;">
+            <div class="col-md-12 text-left">
+                <label>No se encontraron registros</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 25px; margin-bottom: 25px; margin-right: 5px;">
+    <div class="col-md-10"></div>
+    <div class="col-md-2 d-none d-sm-block">
+        <button id="exportarLibroExcel" class="btn btn-success" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;"><img src="~/style/img/excel.png" width="20" /> Exportar a Excel</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 5px; margin-bottom: 25px; margin-right: 5px;">
+    <div class="col-md-10"></div>
+    <div class="col-md-2 d-none d-sm-block">
+        <button id="exportarLibroPdf" class="btn btn-danger" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;"><img src="~/style/img/reader.png" width="20" /> Exportar a PDF</button>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+</script>

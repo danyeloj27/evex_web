@@ -1,0 +1,224 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "Turnos";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaRepetidosColummna">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>Ya un grupo fue asignado para este día</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaVaciosTurno">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>Debe seleccionar al menos un grupo y una fecha válida</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaAnno">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>El año seleccionado es diferente al actual</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlertaTurno">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <label id="msg1" style="font-weight: bold; padding-left: 15px;"></label>
+                </div>
+                <div class="row">
+                    <label id="msg2" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                </div>
+                <div>
+                    <label id="msg3" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="aceptarEliminarTurno" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancelar</button>
+            </div>
+        </div>
+
+    </div><!-- /.modal -->
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="turnoGuardado">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <label>La programación de turnos se guardó con éxito</label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        ASIGNACIÓN DE TURNOS
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card" style="animation-delay: 1.5s;">
+    <div class="card-body">
+        <div class="row" style="padding-left: 20px; padding-right: 20px;">
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Grupo</label>
+                    <select class="form-control" id="grupoConductorTurno" onfocusout="checkVacio(this)">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Fecha</label>
+                    <input class="form-control" id="fechaTurno" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                </div>
+            </div>
+            <!--
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Inicio</label>
+                    <input class="form-control" id="fechaInicioTurno" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">Fin</label>
+                    <input class="form-control" id="fechaFinTurno" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                </div>
+            </div>-->
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="" style="color: white;">.</label>
+                    <button id="agregarTurno" class="btn btn-success" data-toggle="modal" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;" ;"><i class="fas fa-plus"></i> Agregar</button>
+                </div>
+            </div>
+            <div class="col-md-8" style="padding: 0px 5px 0px 0px;">
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="" style="color: white;">.</label>
+                    <button id="guardarTurno" class="btn btn-primary" data-toggle="modal" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;" ;"> Guardar</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-right: 20px;">
+            <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px; width: 100%;">
+                <table class="table table-bordered table-striped mb-0" id="tbl-turnos">
+                    <thead>
+                        <tr>
+                            <th>GRUPO</th>
+                            <th>ENE</th>
+                            <th>FEB</th>
+                            <th>MAR</th>
+                            <th>ABR</th>
+                            <th>MAY</th>
+                            <th>JUN</th>
+                            <th>JUL</th>
+                            <th>AGO</th>
+                            <th>SEP</th>
+                            <th>OCT</th>
+                            <th>NOV</th>
+                            <th>DIC</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (Turnos listaTurnos in Model.listTurnos)
+                        {
+                            <tr>
+                                <td>@listaTurnos.Grupo</td>
+                                <td>@listaTurnos.Ene</td>
+                                <td>@listaTurnos.Feb</td>
+                                <td>@listaTurnos.Mar</td>
+                                <td>@listaTurnos.Abr</td>
+                                <td>@listaTurnos.May</td>
+                                <td>@listaTurnos.Jun</td>
+                                <td>@listaTurnos.Jul</td>
+                                <td>@listaTurnos.Ago</td>
+                                <td>@listaTurnos.Sep</td>
+                                <td>@listaTurnos.Oct</td>
+                                <td>@listaTurnos.Nov</td>
+                                <td>@listaTurnos.Dic</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row" style="margin-top: 25px; margin-bottom: 25px; margin-right: 5px;">
+    <div class="col-md-10"></div>
+    <div class="col-md-2">
+        <button id="ExportarLibro" class="btn btn-primary" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;" onclick="tableToExcel('tbl-turnos', 'Turnos')">Exportar a Excel</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+        , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+</script>

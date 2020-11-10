@@ -1,0 +1,424 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{0377FD78-AB38-428A-9F65-27822C901151}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>ecosystem</RootNamespace>
+    <AssemblyName>ecosystem</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.3.0, Culture=neutral, PublicKeyToken=0e99375e54769942">
+      <HintPath>..\packages\BouncyCastle.1.8.3.1\lib\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Crc32C.NET, Version=1.0.5.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Crc32C.NET.1.0.5.0\lib\net20\Crc32C.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="DnsClient, Version=1.2.0.0, Culture=neutral, PublicKeyToken=4574bb5573c51424, processorArchitecture=MSIL">
+      <HintPath>packages\DnsClient.1.2.0\lib\net471\DnsClient.dll</HintPath>
+    </Reference>
+    <Reference Include="DocumentFormat.OpenXml, Version=2.9.1.0, Culture=neutral, PublicKeyToken=8fb06cb64d019a17, processorArchitecture=MSIL">
+      <HintPath>..\packages\DocumentFormat.OpenXml.2.9.1\lib\net46\DocumentFormat.OpenXml.dll</HintPath>
+    </Reference>
+    <Reference Include="DotNetZip, Version=1.13.4.0, Culture=neutral, PublicKeyToken=6583c7c814667745, processorArchitecture=MSIL">
+      <HintPath>..\packages\DotNetZip.1.13.4\lib\net40\DotNetZip.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.2, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.2\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
+      <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="MongoDB.Bson, Version=2.10.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MongoDB.Bson.2.10.2\lib\net452\MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver, Version=2.10.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MongoDB.Driver.2.10.2\lib\net452\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core, Version=2.10.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MongoDB.Driver.Core.2.10.2\lib\net452\MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Libmongocrypt, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\MongoDB.Libmongocrypt.1.0.0\lib\net452\MongoDB.Libmongocrypt.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.17.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <HintPath>..\packages\MySql.Data.8.0.17\lib\net452\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
+      <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpCompress, Version=0.23.0.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
+      <HintPath>packages\SharpCompress.0.23.0\lib\net45\SharpCompress.dll</HintPath>
+    </Reference>
+    <Reference Include="SimpleCrypto, Version=26.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\SimpleCrypto.0.3.30.26\lib\SimpleCrypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Snappy.NET, Version=1.1.1.8, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\Snappy.NET.1.1.1.8\lib\net45\Snappy.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Common, Version=2.2.12.61046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.9.2.1\lib\net46\Spire.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.License, Version=1.3.7.46, Culture=neutral, PublicKeyToken=b1144360237c8b3f, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.9.2.1\lib\net46\Spire.License.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.Pdf, Version=5.2.8.19046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.9.2.1\lib\net46\Spire.Pdf.dll</HintPath>
+    </Reference>
+    <Reference Include="Spire.XLS, Version=9.2.12.61046, Culture=neutral, PublicKeyToken=663f351905198cb3, processorArchitecture=MSIL">
+      <HintPath>..\packages\FreeSpire.XLS.9.2.1\lib\net46\Spire.XLS.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.IO.Compression.FileSystem" />
+    <Reference Include="System.IO.Compression.ZipFile, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Compression.ZipFile.4.3.0\lib\net46\System.IO.Compression.ZipFile.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.IO.Packaging, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.IO.Packaging.4.5.0\lib\net46\System.IO.Packaging.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Management" />
+    <Reference Include="System.Runtime.InteropServices.RuntimeInformation, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
+      <Private>True</Private>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="WindowsBase" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.7\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.7\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.7\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Global.asax" />
+    <Content Include="style\css\all.css" />
+    <Content Include="style\css\animate.css" />
+    <Content Include="style\css\bootstrap.css" />
+    <Content Include="style\css\custom_styles.css" />
+    <Content Include="style\css\simple-switch.css" />
+    <Content Include="style\img\background.png" />
+    <Content Include="style\img\evxlogo.png" />
+    <Content Include="style\img\icon.ico" />
+    <Content Include="style\img\logo eco sin fondo.png" />
+    <Content Include="style\img\logo-big.png" />
+    <Content Include="style\img\logo.png" />
+    <Content Include="style\img\reader.png" />
+    <Content Include="style\js\all.js" />
+    <Content Include="style\js\scriptsEnviarCorreo.js" />
+    <Content Include="style\js\scriptsLogin.js" />
+    <Content Include="style\js\jquery.simpleswitch.js" />
+    <Content Include="style\js\jquery.switcher.js" />
+    <Content Include="style\js\scriptsArea.js" />
+    <Content Include="style\js\scriptsBlacklist.js" />
+    <Content Include="style\js\scriptsCarrerasFacturadas.js" />
+    <Content Include="style\js\scriptsCentroCosto.js" />
+    <Content Include="style\js\scriptsEmpresa.js" />
+    <Content Include="style\js\scriptsHolding.js" />
+    <Content Include="style\js\scriptsLibroMayor.js" />
+    <Content Include="style\js\scriptsMoviles.js" />
+    <Content Include="style\js\scripts.js" />
+    <Content Include="style\js\scriptsPasajeros.js" />
+    <Content Include="style\js\scriptsPlantillaCobro.js" />
+    <Content Include="style\js\scriptsPrincipal.js" />
+    <Content Include="style\js\scriptsTipoBanco.js" />
+    <Content Include="style\js\scriptsTipoContrato.js" />
+    <Content Include="style\js\scriptsTipoCuenta.js" />
+    <Content Include="style\js\scriptsTipoGrupo.js" />
+    <Content Include="style\js\scriptsTipoLicencia.js" />
+    <Content Include="style\js\scriptsTipoSucursal.js" />
+    <Content Include="style\js\scriptsTipoTecnologia.js" />
+    <Content Include="style\js\scriptsTipoTurno.js" />
+    <Content Include="style\js\scriptsTipoVehiculo.js" />
+    <Content Include="style\js\scriptsTurnos.js" />
+    <Content Include="style\js\scriptsUsuarios.js" />
+    <Content Include="style\js\scriptsVerCorreos.js" />
+    <Content Include="style\webfonts\fa-brands-400.svg" />
+    <Content Include="style\webfonts\fa-regular-400.svg" />
+    <Content Include="style\webfonts\fa-solid-900.svg" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\AccesoController.cs" />
+    <Compile Include="Controllers\ActualizarCorreoController.cs" />
+    <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\BlacklistController.cs" />
+    <Compile Include="Controllers\BuscarFactoringController.cs" />
+    <Compile Include="Controllers\CarrerasFacturadasController.cs" />
+    <Compile Include="Controllers\CentroCostoController.cs" />
+    <Compile Include="Controllers\EmpresaController.cs" />
+    <Compile Include="Controllers\EnviarCorreoController.cs" />
+    <Compile Include="Controllers\HoldingController.cs" />
+    <Compile Include="Controllers\LibroMayorController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\PasajerosController.cs" />
+    <Compile Include="Controllers\PlantillaCobroController.cs" />
+    <Compile Include="Controllers\PrincipalController.cs" />
+    <Compile Include="Controllers\ActualizarPasswordController.cs" />
+    <Compile Include="Controllers\ProcesarFactoringController.cs" />
+    <Compile Include="Controllers\RecuperarPasswordController.cs" />
+    <Compile Include="Controllers\MovilesController.cs" />
+    <Compile Include="Controllers\SesionController.cs" />
+    <Compile Include="Controllers\TipoBancoController.cs" />
+    <Compile Include="Controllers\TipoContratoController.cs" />
+    <Compile Include="Controllers\TipoCuentaController.cs" />
+    <Compile Include="Controllers\TipoGrupoController.cs" />
+    <Compile Include="Controllers\TipoLicenciaController.cs" />
+    <Compile Include="Controllers\TipoSucursalController.cs" />
+    <Compile Include="Controllers\TipoTecnologiaController.cs" />
+    <Compile Include="Controllers\TipoTurnoController.cs" />
+    <Compile Include="Controllers\TipoVehiculoController.cs" />
+    <Compile Include="Controllers\TurnoMovilController.cs" />
+    <Compile Include="Controllers\TurnosController.cs" />
+    <Compile Include="Controllers\UsuariosController.cs" />
+    <Compile Include="Controllers\VerCorreosController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Area.cs" />
+    <Compile Include="Models\Blacklist.cs" />
+    <Compile Include="Models\BuscarBanco.cs" />
+    <Compile Include="Models\BuscarFactoring.cs" />
+    <Compile Include="Models\BuscarMovil.cs" />
+    <Compile Include="Models\BuscarParametro.cs" />
+    <Compile Include="Models\BuscarParametros.cs" />
+    <Compile Include="Models\CamposCustom.cs" />
+    <Compile Include="Models\CarrerasFacturadas.cs" />
+    <Compile Include="Models\CentroCosto.cs" />
+    <Compile Include="Models\EliminarUsuarioVehiculo.cs" />
+    <Compile Include="Models\BuscarVehiculo.cs" />
+    <Compile Include="Models\BuscarUsuarioVehiculo.cs" />
+    <Compile Include="Models\Empresa.cs" />
+    <Compile Include="Models\ExcelMoviles.cs" />
+    <Compile Include="Models\HistoricoEstado.cs" />
+    <Compile Include="Models\Holding.cs" />
+    <Compile Include="Models\MovilFull.cs" />
+    <Compile Include="Models\Pasajeros.cs" />
+    <Compile Include="Models\PlantillaCobro.cs" />
+    <Compile Include="Models\ProcesarFactoring.cs" />
+    <Compile Include="Models\TipoBanco.cs" />
+    <Compile Include="Models\TipoContrato.cs" />
+    <Compile Include="Models\TipoCuenta.cs" />
+    <Compile Include="Models\TipoGrupo.cs" />
+    <Compile Include="Models\TipoLicencia.cs" />
+    <Compile Include="Models\TipoSucursal.cs" />
+    <Compile Include="Models\TipoTecnologia.cs" />
+    <Compile Include="Models\TipoTurno.cs" />
+    <Compile Include="Models\TipoVehiculo.cs" />
+    <Compile Include="Models\TraerLibroMayor.cs" />
+    <Compile Include="Models\Turnos.cs" />
+    <Compile Include="Models\Usuarios.cs" />
+    <Compile Include="Models\VerCorreos.cs" />
+    <Compile Include="Models\web_usuarios_login.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="Views\Login\Login.cshtml" />
+    <None Include="packages.config" />
+    <Content Include="Views\Moviles\Moviles.cshtml" />
+    <Content Include="Views\ActualizarPassword\ActualizarPassword.cshtml" />
+    <Content Include="Views\Principal\Principal.cshtml" />
+    <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
+    <None Include="Properties\PublishProfiles\NServidor.pubxml" />
+    <None Include="Properties\PublishProfiles\produccion.pubxml" />
+    <None Include="Properties\PublishProfiles\testing.pubxml" />
+    <Content Include="Views\Usuarios\Usuarios.cshtml" />
+    <Content Include="Views\EnviarCorreo\EnviarCorreo.cshtml" />
+    <Content Include="Views\Empresa\Empresa.cshtml" />
+    <Content Include="Views\Sesion\Sesion.cshtml" />
+    <Content Include="Views\Blacklist\Blacklist.cshtml" />
+    <Content Include="Views\ProcesarFactoring\ProcesarFactoring.cshtml" />
+    <Content Include="Views\ActualizarCorreo\ActualizarCorreo.cshtml" />
+    <Content Include="Views\Holding\Holding.cshtml" />
+    <Content Include="Views\BuscarFactoring\BuscarFactoring.cshtml" />
+    <Content Include="Views\LibroMayor\LibroMayor.cshtml" />
+    <Content Include="Views\CarrerasFacturadas\CarrerasFacturadas.cshtml" />
+    <Content Include="Views\Turnos\Turnos.cshtml" />
+    <Content Include="Views\TipoBanco\TipoBanco.cshtml" />
+    <Content Include="Views\TipoContrato\TipoContrato.cshtml" />
+    <Content Include="Views\TipoCuenta\TipoCuenta.cshtml" />
+    <Content Include="Views\TipoGrupo\TipoGrupo.cshtml" />
+    <Content Include="Views\TipoLicencia\TipoLicencia.cshtml" />
+    <Content Include="Views\TipoTecnologia\TipoTecnologia.cshtml" />
+    <Content Include="Views\TipoSucursal\TipoSucursal.cshtml" />
+    <Content Include="Views\TipoTurno\TipoTurno.cshtml" />
+    <Content Include="Views\TipoVehiculo\TipoVehiculo.cshtml" />
+    <Content Include="Views\TurnoMovil\TurnoMovil.cshtml" />
+    <Content Include="Views\CentroCosto\CentroCosto.cshtml" />
+    <Content Include="Views\Area\Area.cshtml" />
+    <Content Include="style\webfonts\fa-brands-400.eot" />
+    <Content Include="style\webfonts\fa-brands-400.ttf" />
+    <Content Include="style\webfonts\fa-brands-400.woff" />
+    <Content Include="style\webfonts\fa-brands-400.woff2" />
+    <Content Include="style\webfonts\fa-regular-400.eot" />
+    <Content Include="style\webfonts\fa-regular-400.ttf" />
+    <Content Include="style\webfonts\fa-regular-400.woff" />
+    <Content Include="style\webfonts\fa-regular-400.woff2" />
+    <Content Include="style\webfonts\fa-solid-900.eot" />
+    <Content Include="style\webfonts\fa-solid-900.ttf" />
+    <Content Include="style\webfonts\fa-solid-900.woff" />
+    <Content Include="style\webfonts\fa-solid-900.woff2" />
+    <Content Include="Views\PlantillaCobro\PlantillaCobro.cshtml" />
+    <Content Include="Views\VerCorreos\VerCorreos.cshtml" />
+    <Content Include="Views\Pasajeros\Pasajeros.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="mainPage.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>55890</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:55890/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>Este proyecto hace referencia a los paquetes NuGet que faltan en este equipo. Use la restauración de paquetes NuGet para descargarlos. Para obtener más información, consulte http://go.microsoft.com/fwlink/?LinkID=322105. El archivo que falta es {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets'))" />
+  </Target>
+  <Import Project="packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets" Condition="Exists('packages\MongoDB.Libmongocrypt.1.0.0\build\MongoDB.Libmongocrypt.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

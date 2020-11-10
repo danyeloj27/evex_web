@@ -1,0 +1,272 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "PlantillaCobro";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="nombrePlantilla" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="collapsed card-link">
+                        <p class="font-weight-bold">NOMBRE DE LA PLANTILLA</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-12" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <input class="form-control" id="nombreInicialPlantilla" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button id="cerrarNombrePlantilla" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button id="guardarNombrePlantilla" type="button" class="btn btn-info" style="margin-bottom: 20px; font-size: 0.85rem; width: 100%;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="datosPlantilla" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="col-md-10" style="padding: 0px 5px 0px 0px;">
+                    <div class="form-group">
+
+                    </div>
+                </div>
+            </div>
+            <div class="container" style="padding-top: 0px;">
+                <div class="card" style="margin-bottom: 5px;">
+                    <div class="card-header" style="background-color: white; color: #28a745;">
+                        <a class="collapsed">
+                            <p class="font-weight-bold" style="margin-bottom: 0px;">REGISTRO DE PLANTILLA</p>
+                        </a>
+                    </div>
+                    <div id="registroTipoCuenta" class="card-body">
+                        <form>
+                            <div class="row">
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Código</label>
+                                        <input class="form-control" id="codPlantilla" autocomplete="off" maxlength="8" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-9" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Descripción</label>
+                                        <input class="form-control" id="descPlantilla" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <p class="font-weight-bold" style="margin-top: 20px; margin-left: 20px;">TIPO DE VEHICULO</p>
+                                </div>
+                                <div class="col-md-7"></div>
+                                <div class="col-md-2" style="padding-right: 22px;">
+                                    <!--<button id="nuevoCampo" type="button" class="btn btn-info" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal" data-target="">Nuevo Campo</button>-->
+                                </div>
+                                <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding: 5px 20px 20px 20px; width: 100%;">
+                                    <table id="tbl-plantillaVehiculo" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ACCIÓN</th>
+                                                <th>DESCRIPCIÓN</th>
+                                                <th>BAJADA BANDERA</th>
+                                                <th>VALOR KM</th>
+                                                <th>VALOR TAG</th>
+                                                <th>VALOR MIN</th>
+                                                <th>VALOR 200MTS</th>
+                                                <th>BAJADA BANDERA VIP</th>
+                                                <th>VALOR KM VIP</th>
+                                                <th>VALOR TAG VIP</th>
+                                                <th>VALOR MIN VIP</th>
+                                                <th>VALOR 200MTS VIP</th>
+                                                <th>TARIFA MINIMA</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                                <div class="col-md-10"></div>
+                                <div class="col-md-2" style="padding-right: 0px;">
+                                    <button id="cerrarDatosPlantilla" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Registro Plantilla-->
+
+<div class="modal fade" id="datosValoresVehiculos" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="collapsed card-link">
+                        <p class="font-weight-bold">VALORES</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Bajada Bandera</label>
+                                    <input class="form-control" id="bajadaBandera" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor KM</label>
+                                    <input class="form-control" id="valorKm" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor TAG</label>
+                                    <input class="form-control" id="valorTag" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor Minuto</label>
+                                    <input class="form-control" id="valorMinuto" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor 200MTS</label>
+                                    <input class="form-control" id="valor200Mts" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Bajada Bandera VIP</label>
+                                    <input class="form-control" id="bajadaBanderaVip" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor KM VIP</label>
+                                    <input class="form-control" id="valorKmVip" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor TAG VIP</label>
+                                    <input class="form-control" id="valorTagVip" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor Minuto VIP</label>
+                                    <input class="form-control" id="valorMinutoVip" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Valor 200MTS VIP</label>
+                                    <input class="form-control" id="valor200MtsVip" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Tarifa Mínima</label>
+                                    <input class="form-control" id="tarifaMinima" autocomplete="off" maxlength="5" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                            </div>
+                            <div class="col" style="padding: 0px 5px 0px 0px;">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <div class="col-md-6"></div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button id="cerrarValoresVehiculo" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button id="guardarValoresVehiculo" type="button" class="btn btn-info" style="margin-bottom: 20px; font-size: 0.85rem; width: 100%;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Principal-->
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        INGRESO DE PLANTILLAS DE COBRO
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+    <div class="col-md-9" style="padding: 0px 5px 0px 0px;">
+    </div>
+    <div class="col-md-2" style="padding: 0px 0px 0px 0px; margin-left: 6px; padding-left: 45px; padding-right: 10px;">
+        <button id="nuevaPlantilla" type="button" class="btn btn-success" data-dismiss="modal" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+    </div>
+    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+    </div>
+</div>
+
+<div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+    <div class="container" style="padding-top: 0px;">
+        <table id="tbl-plantilla" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+        </table>
+    </div>
+</div>
+

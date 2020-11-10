@@ -1,0 +1,352 @@
+﻿body {
+    background-repeat: no-repeat;
+    background-size: 100%;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.form-control {
+    height: 65%;
+    padding-top: 2px;
+}
+
+.form-control label {
+    margin-bottom: 1px;
+}
+
+.dropdown-menu {
+        font-size: 100%;
+}
+
+.navbar {
+    background: #fff;
+    padding: 0px 0px;
+}
+
+nav ul {
+    list-style: none;
+    text-align: center;
+}
+
+nav ul li {
+display: inline-block;
+}
+
+.nav-link {
+display: block;
+padding: 15px;
+text-decoration: none;
+margin: 0px;
+}
+
+.nav-link,
+.nav-link:after,
+.nav-link:before {
+    transition: all .5s;
+}
+
+/*.nav-link:hover {
+    color: white;
+}*/
+
+/* SHIFT */
+.nav-link {
+    position: relative;
+    z-index: 1;
+}
+
+.nav-link:after {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    margin: auto;
+    width: 100%;
+    height: 1px;
+    content: '.';
+    color: transparent;
+    background: #28a745;
+    opacity: 0;
+    z-index: -1;
+}
+
+.nav-link:hover:after {
+    opacity: 1;
+    visibility: visible;
+    height: 100%;
+}
+
+.dropdown-menu a:hover {
+    margin: 0px 0px;
+}
+
+.dropdown:hover > .dropdown-menu {
+    display: block;
+}
+
+.card{
+    font-size: 0.85rem;
+}
+
+.card input{
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+}
+
+.card select{
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+    height: 28px;
+}
+
+
+.usuario input{
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+}
+
+.usuario select {
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+    height: 28px;
+}
+.container input{
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+}
+
+.container select {
+    font-size: 0.85rem;
+    padding-left: 5px;
+    padding-right: 0px;
+    height: 28px;
+}
+
+.card-link p {
+    margin-bottom: 0px;
+}
+
+.card-header,
+.card-header:after,
+.card-headerk:before {
+    transition: all .2s;
+}
+
+.card-header:hover {
+    background-color: #2fba41;
+}
+
+.card-header {
+    color: white;
+    background-color: #28a745;
+}
+
+.card-headeralone {
+    color: #28a745;
+    background-color: white;
+    padding-bottom: 0px;
+}
+
+.card-link p,
+.card-link p:after,
+.card-link p:before {
+    transition: all .2s;
+}
+
+.card-link p:hover {
+    color: white;
+}
+
+#tbl-conductores {
+    display: block;
+    overflow: scroll;
+    table-layout: auto;
+    width: 100%;
+}
+
+td {
+    width: 1px;
+    white-space: nowrap;
+}
+
+th {
+    width: 1px;
+    white-space: nowrap;
+}
+
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 17px;
+}
+
+.material-icons {
+    font-size: 17px;
+}
+
+.modal-open {
+    padding-right: 0 !important;
+    overflow-y: auto;
+}
+
+.modal.fade .modal-dialog {
+    -webkit-transform: translate(0);
+    -moz-transform: translate(0);
+    transform: translate(0);
+}
+
+my-auto {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+
+.customtable thead th {
+    color: white;
+    background-color: #28a745;
+}
+
+a {
+    color: white;
+}
+
+.linkmenu {
+    color: #28a745;
+}
+
+.linkmenu:hover {
+    color: white;
+}
+/****************/
+.ml3 {
+    font-size: 1em;
+    text-align: center;
+}
+
+/****************/
+.procesando.show {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    align-items: flex-start;
+}
+
+.field-icon {
+  float: right;
+  margin-left: -25px;
+  margin-top: -25px;
+  position: relative;
+  z-index: 2;
+}
+
+.container{
+  padding-top:50px;
+  margin: auto;
+}
+
+input {
+    text-transform: uppercase;
+}
+
+.dataTables_wrapper {
+    font-size: 0.85rem;
+}
+
+
+#tbl-moviles tr {
+    height: 30px
+}
+
+/*******/
+.my-custom-scrollbar {
+    position: relative;
+    height: 312px;
+    overflow-y: auto;
+}
+
+.table-wrapper-scroll-y {
+    display: block;
+    text-align: center;
+}
+
+#tbl-facturas thead th {
+    background-color: #28a745;
+    color: white;
+    position: sticky;
+    top: 0;
+    margin-top: -15px;
+}
+
+table.table td a {
+    cursor: pointer;
+    display: inline-block;
+    margin: 0 5px;
+    min-width: 24px;
+}
+
+table.table td .addFactoring {
+    display: none;
+}
+
+.table {
+    text-align: center;
+}
+/******/
+
+.switchery {
+    width: 22px;
+    height: 10px;
+}
+
+.switchery > small {
+    width: 10px;
+    height: 10px;
+}
+
+.custom-select-sm {
+    width: 50px !important;
+}
+
+#ruta #usuario{
+    font-size: 0.5rem;
+}
+
+.triangle-bottomleft {
+    max-width: 0;
+    max-height: 0;
+    border-bottom: 50px solid #28a745;
+    border-right: 50px solid transparent;
+    padding-right: 0px;
+}
+
+/*resize table*/
+@media screen and (max-width: 420px) {
+    .movilLibroMayor {
+        font-size: 0.75rem;
+    }
+
+    .card {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#tbl-TipoLicencia {
+    text-align: left;
+}
+
+#tbl-TipoLicencia thead th {
+    text-align: left;
+}
+
+.dt-body-right {
+    text-align: right;
+}

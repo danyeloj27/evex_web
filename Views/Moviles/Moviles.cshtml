@@ -1,0 +1,1493 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "Moviles";
+    Layout = "~/mainPage.cshtml";
+}
+    <div>
+        <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+            <div class="col-md-8">
+                <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+                <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+                <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+            </div>
+            <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+                <label id="#ruta">Bienvenido(a)</label>
+                <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+                <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+    </div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        INGRESO DE MÓVILES
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div id="modalCambioEstado" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">INDIQUE UN MOTIVO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <label for="">Detalle el motivo por el cual está realizando el cambio de Estado</label>
+                        <div class="input-group">
+                            <textarea id="motivoCambioEstado" type="text" rows="3" class="form-control" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <button id="guardarCambioEstado" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                        <button id="cerrarCambioEstador" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem;">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Modal Cambio de Estado-->
+<div id="desvincularConductor" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">INDIQUE UN MOTIVO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        <label for="validationDefault01" class=" col-form-label">Agregar a BlackList</label>
+                        <fieldset id="agregarBL">
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="siBL" name="example" checked="checked" value="SI">
+                                <label class="custom-control-label" for="siBL">SI</label>
+                            </div>
+                            <div class="custom-control custom-radio custom-control-inline">
+                                <input type="radio" class="custom-control-input" id="noBL" name="example" value="NO">
+                                <label class="custom-control-label" for="noBL">NO</label>
+                            </div>
+                        </fieldset>
+                    </div>
+                    <div class="row">
+                        <label for="">Detalle el motivo por el cual está desvinculando al conductor</label>
+                        <div class="input-group">
+                            <textarea id="motivoDesvincular" type="text" rows="3" class="form-control" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <button id="guardarMotivoDesvincular" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                        <button id="cerrarMotivoDesvincular" type="button" class="btn btn-light" data-dismiss="modal" style="margin-right: 5px; font-size: 0.85rem;">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Cambio de Estado-->
+<div id="cambiarEstado" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">CAMBIAR ESTADO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row" id="filaEstado">
+                        <label style="margin-right: 5px; margin-left: 14px; font-weight: bold">Estado del Vehículo</label>
+                    </div>
+                    <div class="row">
+                        <div class="container" style="padding-top: 5px;">
+                            <table id="tbl-usuariosMovil" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>RUT</th>
+                                        <th>Nombre y Apellido</th>
+                                        <th>Perfil</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <button id="guardarEstados" type="button" class="btn btn-info" data-dismiss="modal" style="margin-right: 5px; font-size: 0.85rem;">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--UN MOVIL-->
+<div id="listaMoviles" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="col-md-10" style="padding: 0px 5px 0px 0px;">
+                    <div class="form-group">
+
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                    <label for="">Nro Móvil</label>
+                    <div class="input-group">
+                        <input id="codigoMovil" type="text" class="form-control form-control-sm" required autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" onchange="checkVacio(this)">
+                    </div>
+                </div>
+            </div>
+            <div id="accordion" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="card" style="margin-bottom: 5px;" id="cardVehiculo">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne" id="tituloVehiculo">
+                            <p class="font-weight-bold">DATOS DE VEHICULO</p>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Patente</label>
+                                        <input class="form-control" id="patenteVehiculo" autocomplete="off" maxlength="6" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Inscripción</label>
+                                        <input class="form-control" id="inscripcionVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Registro MTT</label>
+                                        <input class="form-control" id="mttVehiculo" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Rev. Téc.</label>
+                                        <input class="form-control" id="revisionVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoVehiculo" onfocusout="checkVacio(this)" style="padding-left: 0px;border-left-width: 1px;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Marca</label>
+                                        <input class="form-control" id="marcaVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Modelo</label>
+                                        <input class="form-control" id="modeloVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Año</label>
+                                        <input class="form-control" id="anoVehiculo" autocomplete="off" onkeypress="return isNumber(event)" maxlength="4" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Asientos</label>
+                                        <input class="form-control" id="asientosVehiculo" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Color</label>
+                                        <input class="form-control" id="colorVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Chasis</label>
+                                        <input class="form-control" id="chasisVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Motor</label>
+                                        <input class="form-control" id="motorVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tecnología</label>
+                                        <select class="form-control" id="tecnologiaVehiculo" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px; width: 100%">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Seguro Asiento</label>
+                                        <input class="form-control" id="seguroAsientoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Venc.</label>
+                                        <input class="form-control" id="vencimientoAsientoVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro Poliza</label>
+                                        <input class="form-control" id="polizaAsientoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Seguro SOAP</label>
+                                        <input class="form-control" id="ssoapVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Venc.</label>
+                                        <input class="form-control" id="vencimientoSoapVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Poliza</label>
+                                        <input class="form-control" id="polizaSoapVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px;">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Factura</label>
+                                        <select class="form-control" id="factuaVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                            <option selected disabled>Seleccione</option>
+                                            <option>Propietario</option>
+                                            <option>Titular</option>
+                                            <option>Conductor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo Contrato</label>
+                                        <select class="form-control" id="contratoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo Patente</label>
+                                        <select class="form-control" id="tipoPatenteVehiculo" onfocusout="checkVacio(this)">
+                                            <option selected disabled>Seleccione</option>
+                                            <option>Licitado</option>
+                                            <option>No Licitado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Sucursal</label>
+                                        <select class="form-control" id="sucursalVehiculo" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px;">
+                            <div class="row">
+                                <div class="col-md-12" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Observaciones</label>
+                                        <input class="form-control" id="observacionesVehiculo" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px;" id="cardPropietario">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo" id="tituloPropietario">
+                            <p class="font-weight-bold">DATOS DEL PROPIETARIO</p>
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutPropietario" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutPropietario(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nombre y Apellido</label>
+                                        <input class="form-control" id="nombrePropietario" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo</label>
+                                        <input class="form-control" id="correoPropietario" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Teléfono</label>
+                                        <input class="form-control" id="telefonoPropietario" autocomplete="off" onkeypress="return isNumber(event)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Celular</label>
+                                        <input class="form-control" id="celularPropietario" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Nac.</label>
+                                        <input class="form-control" id="datenp" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Dirección</label>
+                                        <input class="form-control" id="direccionPropietario" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Ing.</label>
+                                        <input class="form-control" id="dateip" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Banco</label>
+                                        <select class="form-control" id="bancoPropietario" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Cuenta</label>
+                                        <input class="form-control" id="cuentaPropietario" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoPropietario" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTransferenciaPropietario" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutPropietario(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Titular Transferencia</label>
+                                        <input class="form-control" id="nombreTransferencia" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo Transferencia</label>
+                                        <input class="form-control" id="correoTransferencia" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Código Contable</label>
+                                        <input class="form-control" id="codigoContable" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px; display: none;" id="cardTitular">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                            <p class="font-weight-bold">DATOS DEL TITULAR</p>
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTitular" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutTitular(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nombre y Apellido</label>
+                                        <input class="form-control" id="nombreTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo</label>
+                                        <input class="form-control" id="correoTitular" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Teléfono</label>
+                                        <input class="form-control" id="telefonoTitular" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Celular</label>
+                                        <input class="form-control" id="celularTitular" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Nac.</label>
+                                        <input class="form-control" id="datent" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Dirección</label>
+                                        <input class="form-control" id="direccionTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Ing.</label>
+                                        <input class="form-control" id="dateit" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Banco</label>
+                                        <select class="form-control" id="bancoTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Cuenta</label>
+                                        <input class="form-control" id="cuentaTitular" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoCuentaTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTransferenciaTitular" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutTitular(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Titular Transferencia</label>
+                                        <input class="form-control" id="nombreTransferenciaTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo Transferencia</label>
+                                        <input class="form-control" id="correoTransferenciaTitular" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cardConductor1" class="card" style="margin-bottom: 5px;">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                            <p class="font-weight-bold">DATOS DEL CONDUCTOR</p>
+                        </a>
+                    </div>
+                    <div id="collapseFour" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <button type="button" id="buscarConductores" class="btn btn-success" data-toggle="modal" data-target="#datosConductor" style="width: 100%; font-size: 0.85rem;" ;"><i class="fa fa-search"></i> Agregar Conductores</button>
+                            </div>
+                            <div class="panel-body" style="padding-top: 0px;">
+                                <table id="tbl-conductores" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Acción</th>
+                                            <th>RUT</th>
+                                            <th>Nombre y Apellido</th>
+                                            <th>Correo</th>
+                                            <th>Dirección</th>
+                                            <th>Comuna</th>
+                                            <th>Ciudad</th>
+                                            <th>Telefono</th>
+                                            <th>Celular</th>
+                                            <th>Perfil</th>
+                                            <th>Estado</th>
+                                            <th>Licencia</th>
+                                            <th>Turno</th>
+                                            <th>Grupo</th>
+                                            <th>Venc. Lic.</th>
+                                            <th>Fec. Incorporación</th>
+                                            <th>Fec. Nac.</th>
+                                            <th>Poder</th>
+                                            <th>Observaciones</th>
+                                            <th>Cont. Emerg.</th>
+                                            <th>Tel. Emerg.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="cardConductor2" class="card" style="margin-bottom: 5px; display:none;">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFive" id="tituloConductor">
+                            <p class="font-weight-bold">DATOS DEL CONDUCTOR</p>
+                        </a>
+                    </div>
+                    <div id="collapseFive" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <form>
+                                <div class="row">
+                                    <div class="col-md-3" style="padding-left: 0px; margin-bottom: 15px;">
+                                        <button id="copiarPropietario" type="button" class="btn btn-info" style="font-size: 0.85rem;">Copiar datos Propietario</button>
+                                    </div>
+                                    <div class="col-md-7">
+                                    </div>
+                                    <div class="col-md-2" style="padding-right: 0px; margin-bottom: 15px; width: 100%;">
+                                        <button id="eliminarConductor" type="button" class="btn btn-danger" style="font-size: 0.85rem;">Eliminar Conductor</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">RUT</label>
+                                            <input class="form-control" id="rutConductor" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRut(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Nombre y Apellido</label>
+                                            <input class="form-control" id="nombreConductor" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Correo</label>
+                                            <input class="form-control" id="correoConductor" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Teléfono</label>
+                                            <input class="form-control" id="telefonoConductor" autocomplete="off" onkeypress="return isNumber(event)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Celular</label>
+                                            <input class="form-control" id="celularConductor" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Fec. Nac.</label>
+                                            <input class="form-control" id="datenc" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-7" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Dirección</label>
+                                            <input class="form-control" id="direccionConductor" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Comuna</label>
+                                            <select class="form-control" id="comunaConductor" onfocusout="checkVacio(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Ciudad</label>
+                                            <select class="form-control" id="ciudadConductor" onfocusout="checkVacio(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Fec. Ing.</label>
+                                            <input class="form-control" id="dateic" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Turno</label>
+                                            <select class="form-control" id="turnoConductor" onfocusout="checkVacio(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Grupo</label>
+                                            <select class="form-control" id="grupoConductor" onfocusout="checkVacio(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Licencia</label>
+                                            <select class="form-control" id="licenciaConductor" onfocusout="checkVacio(this)">
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Venc. Licen.</label>
+                                            <input class="form-control" id="venLicenciaConductor" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="">Observaciones</label>
+                                            <input class="form-control" id="observacionesConductor" autocomplete="off">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="contactoEmergencia">Contacto Emergencia</label>
+                                            <input class="form-control" id="contactoEmergencia" autocomplete="off">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                        <div class="form-group">
+                                            <label for="telefonoEmergencia">Teléfono</label>
+                                            <input class="form-control" id="telefonoEmergencia" autocomplete="off" onkeypress="return isNumber(event)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <button id="guardarMovil" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                    <button id="cerrarModal" type="button" class="btn btn-light" data-dismiss="modal" style="margin-right: 5px; font-size: 0.85rem;">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!--VARIOS MOVILES-->
+<!--<div id="listaMoviles" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="col-md-10" style="padding: 0px 5px 0px 0px;">
+                    <div class="form-group">
+
+                    </div>
+                </div>
+                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                    <label for="">Nro Móvil</label>
+                    <div class="input-group">
+                        <input id="codigoMovil" type="text" class="form-control form-control-sm" required autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" onchange="checkVacio(this)">
+                    </div>
+                </div>
+            </div>
+            <div id="accordion" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                <div class="card" style="margin-bottom: 5px;" id="cardVehiculo">
+                    <div class="card-header">
+                        <a class="card-link" data-toggle="collapse" href="#collapseOne" id="tituloVehiculo">
+                            <p class="font-weight-bold">DATOS DE VEHICULO</p>
+                        </a>
+                    </div>
+                    <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Patente</label>
+                                        <input class="form-control" id="patenteVehiculo" autocomplete="off" maxlength="6" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Inscripción</label>
+                                        <input class="form-control" id="inscripcionVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Registro MTT</label>
+                                        <input class="form-control" id="mttVehiculo" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Rev. Téc.</label>
+                                        <input class="form-control" id="revisionVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoVehiculo" onfocusout="checkVacio(this)" style="padding-left: 0px;border-left-width: 1px;">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Marca</label>
+                                        <input class="form-control" id="marcaVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Modelo</label>
+                                        <input class="form-control" id="modeloVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Año</label>
+                                        < class="form-control" id="anoVehiculo" autocomplete="off" onkeypress="return isNumber(event)" maxlength="4" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Asientos</label>
+                                        <input class="form-control" id="asientosVehiculo" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Color</label>
+                                        <input class="form-control" id="colorVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Chasis</label>
+                                        <input class="form-control" id="chasisVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Motor</label>
+                                        <input class="form-control" id="motorVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Teconología</label>
+                                        <select class="form-control" id="tecnologiaVehiculo" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px; width: 100%">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Seguro Asiento</label>
+                                        <input class="form-control" id="seguroAsientoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Venc.</label>
+                                        <input class="form-control" id="vencimientoAsientoVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro Poliza</label>
+                                        <input class="form-control" id="polizaAsientoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Seguro SOAP</label>
+                                        <input class="form-control" id="ssoapVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Venc.</label>
+                                        <input class="form-control" id="vencimientoSoapVehiculo" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nro de Poliza</label>
+                                        <input class="form-control" id="polizaSoapVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px;">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Factura</label>
+                                        <select class="form-control" id="factuaVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                            <option selected disabled>Seleccione</option>
+                                            <option>Propietario</option>
+                                            <option>Titular</option>
+                                            <option>Conductor</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo Contrato</label>
+                                        <select class="form-control" id="contratoVehiculo" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo Patente</label>
+                                        <select class="form-control" id="tipoPatenteVehiculo" onfocusout="checkVacio(this)">
+                                            <option>Licitado</option>
+                                            <option>No Licitado</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Sucursal</label>
+                                        <select class="form-control" id="sucursalVehiculo" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr class="style1" style="margin-top: 0px;">
+                            <div class="row">
+                                <div class="col-md-12" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Observaciones</label>
+                                        <input class="form-control" id="observacionesVehiculo" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px;" id="cardPropietario">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo" id="tituloPropietario">
+                            <p class="font-weight-bold">DATOS DEL PROPIETARIO</p>
+                        </a>
+                    </div>
+                    <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutPropietario" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutPropietario(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nombre y Apellido</label>
+                                        <input class="form-control" id="nombrePropietario" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo</label>
+                                        <input class="form-control" id="correoPropietario" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Teléfono</label>
+                                        <input class="form-control" id="telefonoPropietario" autocomplete="off" onkeypress="return isNumber(event)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Celular</label>
+                                        <input class="form-control" id="celularPropietario" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Nac.</label>
+                                        <input class="form-control" id="datenp" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Dirección</label>
+                                        <input class="form-control" id="direccionPropietario" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Ing.</label>
+                                        <input class="form-control" id="dateip" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Banco</label>
+                                        <select class="form-control" id="bancoPropietario" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Cuenta</label>
+                                        <input class="form-control" id="cuentaPropietario" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoPropietario" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTransferenciaPropietario" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutPropietario(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Titular Transferencia</label>
+                                        <input class="form-control" id="nombreTransferencia" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo Transferencia</label>
+                                        <input class="form-control" id="correoTransferencia" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Código Contable</label>
+                                        <input class="form-control" id="codigoContable" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px; display: none;" id="cardTitular">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                            <p class="font-weight-bold">DATOS DEL TITULAR</p>
+                        </a>
+                    </div>
+                    <div id="collapseThree" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTitular" onkeyup="checkRut(this)" maxlength="10" onkeypress="return isRut(event)" onfocusout="checkVacioRut(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Nombre y Apellido</label>
+                                        <input class="form-control" id="nombreTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo</label>
+                                        <input class="form-control" id="correoTitular" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Teléfono</label>
+                                        <input class="form-control" id="telefonoTitular" autocomplete="off">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Celular</label>
+                                        <input class="form-control" id="celularTitular" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Nac.</label>
+                                        <input class="form-control" id="datent" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-11" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Dirección</label>
+                                        <input class="form-control" id="direccionTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Fec. Ing.</label>
+                                        <input class="form-control" id="dateit" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Banco</label>
+                                        <select class="form-control" id="bancoTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Cuenta</label>
+                                        <input class="form-control" id="cuentaTitular" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Tipo</label>
+                                        <select class="form-control" id="tipoCuentaTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">RUT</label>
+                                        <input class="form-control" id="rutTransferenciaTitular" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRutTitular(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Titular Transferencia</label>
+                                        <input class="form-control" id="nombreTransferenciaTitular" autocomplete="off" onfocusout="checkVacio(this)">
+                                    </div>
+                                </div>
+                                <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                    <div class="form-group">
+                                        <label for="">Correo Transferencia</label>
+                                        <input class="form-control" id="correoTransferenciaTitular" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                    </div>
+                                    <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                        <label for="">Nro Móvil</label>
+                                        <div class="input-group">
+                                            <input id="codigoMovil" type="text" class="form-control form-control-sm" required autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)" onchange="checkVacio(this)">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-bottom: 5px;">
+                    <div class="card-header">
+                        <a class="collapsed card-link" data-toggle="collapse" href="#collapseFour">
+                            <p class="font-weight-bold">DATOS DEL CONDUCTOR</p>
+                        </a>
+                    </div>
+                    <div id="collapseFour" class="collapse" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="row">
+                                <button type="button" id="buscarConductores" class="btn btn-success" data-toggle="modal" data-target="#datosConductor" style="width: 100%; font-size: 0.85rem;" ;"><i class="fa fa-search"></i> Agregar Conductores</button>
+                            </div>
+                            <div class="panel-body" style="padding-top: 0px;">
+                                <table id="tbl-conductores" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th>Acción</th>
+                                            <th>RUT</th>
+                                            <th>Nombre y Apellido</th>
+                                            <th>Correo</th>
+                                            <th>Dirección</th>
+                                            <th>Comuna</th>
+                                            <th>Ciudad</th>
+                                            <th>Telefono</th>
+                                            <th>Celular</th>
+                                            <th>Perfil</th>
+                                            <th>Estado</th>
+                                            <th>Licencia</th>
+                                            <th>Turno</th>
+                                            <th>Grupo</th>
+                                            <th>Venc. Lic.</th>
+                                            <th>Fec. Incorporación</th>
+                                            <th>Fec. Nac.</th>
+                                            <th>Poder</th>
+                                            <th>Observaciones</th>
+                                            <th>Contac. Emerg.</th>
+                                            <th>Tel. Emerg.</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <button id="guardarMovil" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                    <button id="cerrarModal" type="button" class="btn btn-light" data-dismiss="modal" style="margin-right: 5px; font-size: 0.85rem;">Cerrar</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+-->
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaFormatoCodigoMovil" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>El código debe ser de 4 dígitos. Rellenar con CEROS de ser necesario (0000)</label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerraralertaFormatoCodigoMovil" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaRutPropietario" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>RUT Inválido</label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerraralertaRutPropietario" type="button" class="btn btn-danger">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaRutTitular" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label>RUT Inválido</label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerraralertaRutTitular" type="button" class="btn btn-danger">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Modal Conductor ya existe-->
+<div class="modal fade" tabindex="-1" role="dialog" id="vehiculoExistente" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="z-index:1050;">
+        <div class="modal-content shadow p-3 mb-5">
+            <div class="modal-body">
+                <label id="vehiculoExiste"></label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarVehiculoExiste" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaCamposVacios">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label id="mensajeVacio"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Registro Conductores-->
+<div class="modal fade" id="datosConductor" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="collapsed card-link">
+                        <p class="font-weight-bold">DATOS DEL CONDUCTOR</p>
+                    </a>
+                </div>
+                <div id="registroConductor" class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-3" style="padding-left: 0px; margin-bottom: 15px;">
+                                <button id="copiarPropietario1" type="button" class="btn btn-info" style="font-size: 0.85rem;">Copiar datos Propietario</button>
+                            </div>
+                            <div class="col-md-9">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">RUT</label>
+                                    <input class="form-control" id="rutConductor1" autocomplete="off" onkeyup="checkRut(this)" onkeypress="return isRut(event)" maxlength="10" onfocusout="checkVacioRut(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Nombre y Apellido</label>
+                                    <input class="form-control" id="nombreConductor1" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Correo</label>
+                                    <input class="form-control" id="correoConductor1" autocomplete="off" type="email" pattern="^[a-zA-Z0-9._+-]+@("@")[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Teléfono</label>
+                                    <input class="form-control" id="telefonoConductor1" autocomplete="off" onkeypress="return isNumber(event)">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Celular</label>
+                                    <input class="form-control" id="celularConductor1" autocomplete="off" onkeypress="return isNumber(event)" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Fec. Nac.</label>
+                                    <input class="form-control" id="datenc1" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-7" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Dirección</label>
+                                    <input class="form-control" id="direccionConductor1" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Comuna</label>
+                                    <select class="form-control" id="comunaConductor1" onfocusout="checkVacio(this)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Ciudad</label>
+                                    <select class="form-control" id="ciudadConductor1" onfocusout="checkVacio(this)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Fec. Ing.</label>
+                                    <input class="form-control" id="dateic1" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Turno</label>
+                                    <select class="form-control" id="turnoConductor1" onfocusout="checkVacio(this)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Grupo</label>
+                                    <select class="form-control" id="grupoConductor1" onfocusout="checkVacio(this)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Licencia</label>
+                                    <select class="form-control" id="licenciaConductor1" onfocusout="checkVacio(this)">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Venc. Licen.</label>
+                                    <input class="form-control" id="venLicenciaConductor1" autocomplete="off" name="date" type="text" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                                </div>
+                            </div>
+                            <div class="col-md-6" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Observaciones</label>
+                                    <input class="form-control" id="observacionesConductor1" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="contactoEmergencia1">Contacto Emergencia</label>
+                                    <input class="form-control" id="contactoEmergencia1" autocomplete="off">
+                                </div>
+                            </div>
+                            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="telefonoEmergencia1">Teléfono</label>
+                                    <input class="form-control" id="telefonoEmergencia1" autocomplete="off" onkeypress="return isNumber(event)">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="cerrarConductor" type="button" class="btn btn-light" data-dismiss="modal" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="guardarConductor" type="button" class="btn btn-info" style="margin-bottom: 20px; font-size: 0.85rem; width: 100%;">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" tabindex="-1" role="dialog" id="conductorExistente" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="z-index:1050;">
+        <div class="modal-content shadow p-3 mb-5">
+            <div class="modal-body">
+                <label id="conductorExiste"></label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarConductorExistente" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" tabindex="-1" role="dialog" id="conductorBlacklist" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered" role="document" style="z-index:1050;">
+        <div class="modal-content shadow p-3 mb-5">
+            <div class="modal-body">
+                <label id="conductorBlacklisted"></label>
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarConductorBlacklist" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pantalla Principal-->
+
+<div class="row" style="margin-top: 15px; margin-left:60px; margin-right: 15px;">
+    <div class="col-md-2" style="padding: 0px 0px 0px 0px; margin-left: 6px; padding-left: 60px;">
+        <button id="exportarExcelMovil" type="button" class="btn btn-success" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal"><img src="~/style/img/excel.png" width="20" /> Exportar a Excel</button>
+    </div>
+    <div class="col-md-7" style="padding: 0px 5px 0px 0px;">
+    </div>
+    <div class="col-md-2" style="padding: 0px 0px 0px 0px; margin-left: 6px;  padding-left: 45px; padding-right: 10px;">
+        <button id="nuevoMovil" type="button" class="btn btn-success" data-dismiss="modal" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal"><i class="fas fa-plus"></i> Agregar Nuevo</button>
+    </div>
+    <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+    </div>
+</div>
+
+<div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+    <div class="container" style="padding-top: 0px;">
+        <table id="tbl-moviles" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+        </table>
+    </div>
+</div>

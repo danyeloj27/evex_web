@@ -1,0 +1,195 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "CarrerasFacturadas";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        CARRERAS FACTURADAS
+    </div>
+    <div class="col-md-1 triangle-bottomleft d-none d-sm-block">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card" style="animation-delay: 1.5s;">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="Cod_Movil">MOVIL</label>
+                    <select id="Cod_Movil" name="Tipo" class="custom-select form-control" style="height:32px;">
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="mesCarreras">MES</label>
+                    <select id="mesCarreras" name="Tipo" class="custom-select form-control" style="height:32px;">
+                        <option selected disabled>Seleccione</option>
+                        <option value="01">ENERO</option>
+                        <option value="02">FEBRERO</option>
+                        <option value="03">MARZO</option>
+                        <option value="04">ABRIL</option>
+                        <option value="05">MAYO</option>
+                        <option value="06">JUNIO</option>
+                        <option value="07">JULIO</option>
+                        <option value="08">AGOSTO</option>
+                        <option value="09">SEPTIEMBRE</option>
+                        <option value="10">OCTUBRE</option>
+                        <option value="11">NOVIEMBRE</option>
+                        <option value="12">DICIEMBRE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="AnoCarreras">AÑO</label>
+                    <select id="AnoCarreras" name="Tipo" class="custom-select form-control" style="height:32px;">
+                        <option selected disabled>Seleccione</option>
+                        <option>2020</option>
+                        <option>2019</option>
+                        <option>2018</option>
+                        <option>2017</option>
+                        <option>2016</option>
+                        <option>2015</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="" style="color: white;">.</label>
+                    <button type="button" id="buscarCarreras" class="btn btn-success" data-toggle="modal" style="width: 100%; font-size: 0.85rem; padding-top: 3px;padding-bottom: 4px;"><i class="fa fa-search"></i> Buscar</button>
+                </div>
+            </div>
+            <div class="col-md-5">
+            </div>
+        </div>
+        <div class="movilCarrerasFacturadas">
+            <div class="row">
+                <label for="Num_Movil" style="font-weight: bold;">CÓDIGO MOVIL </label>
+                <label id="Num_Movil"></label>
+            </div>
+            <div class="row">
+                <label for="Nom_Completo" style="font-weight: bold;">NOMBRE </label>
+                <label id="Nom_Completo"></label>
+            </div>
+            <div class="row">
+                <label for="Rut" style="font-weight: bold;">RUT </label>
+                <label id="Rut"></label>
+            </div>
+            <div class="row">
+                <label for="Direccion" style="font-weight: bold;">DIRECCIÓN </label>
+                <label id="Direccion"></label>
+            </div>
+            <div class="row">
+                <label for="Telefono" style="font-weight: bold;">TELÉFONO </label>
+                <label id="Telefono"></label>
+            </div>
+            <div class="row">
+                <label for="Patente" style="font-weight: bold;">PATENTE </label>
+                <label id="Patente"></label>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-right: 20px; margin-top: 25px;">
+            <div class="container" style="padding-top: 0px; max-width: 100%">
+                <table id="tbl-carrerasFacturadas1" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+                </table>
+            </div>
+        </div>
+        <div class="row" id="panelFacturadas" style="padding-left: 20px; padding-right: 20px; margin-top: 25px;">
+            <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px; width: 100%;">
+                <div class="table-responsive text-nowrap">
+                    <table class="table table-bordered table-striped mb-0 customtable" id="tbl-carrerasFacturadas">
+                        <thead>
+                            <tr>
+                                <th>NRO. VALE</th>
+                                <th>FECHA</th>
+                                <th>TIPO</th>
+                                <th>EMPRESA</th>
+                                <th>TARIFA</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row" id="nocarreras" style="padding-left: 20%; padding-right: 20%; margin-top: 5px; display: none;">
+            <div class="col-md-12 text-left">
+                <label>No se encontraron registros</label>
+            </div>
+        </div>
+        <div class="totalesCarrerasFacturadas">
+            <div class="row" style="margin-top: 25px;">
+                <div class="col-md-4 text-left">
+                    <label>TOTAL VALES: Servicios:</label>
+                    <label id="cantidadVales"></label>
+                    <label>Sub-Total:</label>
+                    <label id="totalVales"></label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 0px;">
+                <div class="col-md-4 text-left">
+                    <label>TOTAL CRISTALES: Servicios:</label>
+                    <label id="cantidadCristales"></label>
+                    <label>Sub-Total:</label>
+                    <label id="totalCristales"></label>
+                </div>
+            </div>
+            <div class="row" style="margin-top: 0px;">
+                <div class="col-md-4 text-left">
+                    <label>TOTAL GENERAL: Servicios:</label>
+                    <label id="cantidadGeneral"></label>
+                    <label>Total:</label>
+                    <label id="totalGeneral"></label>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" style="margin-top: 25px; margin-bottom: 25px; margin-right: 5px;">
+    <div class="col-md-10"></div>
+    <div class="col-md-2 d-none d-sm-block">
+        <button id="exportarCarrerasExcel" class="btn btn-success" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;"><img src="~/style/img/excel.png" width="20" /> Exportar a Excel</button>
+    </div>
+</div>
+<div class="row" style="margin-top: 5px; margin-bottom: 25px; margin-right: 5px;">
+    <div class="col-md-10"></div>
+    <div class="col-md-2 d-none d-sm-block">
+        <button id="exportarCarrerasPdf" class="btn btn-danger" style="width: 100%; font-size: 0.85rem; padding-top: 4px;padding-bottom: 4px;"><img src="~/style/img/reader.png" width="20" /> Exportar a PDF</button>
+    </div>
+</div>
+<script type="text/javascript">
+    var tableToExcel = (function () {
+        var uri = 'data:application/vnd.ms-excel;base64,'
+            , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+            , base64 = function (s) { return window.btoa(unescape(encodeURIComponent(s))) }
+            , format = function (s, c) { return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; }) }
+        return function (table, name) {
+            if (!table.nodeType) table = document.getElementById(table)
+            var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+            window.location.href = uri + base64(format(template, ctx))
+        }
+    })()
+</script>

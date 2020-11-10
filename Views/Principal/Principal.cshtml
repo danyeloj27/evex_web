@@ -1,0 +1,22 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "Principal";
+    Layout = "~/mainPage.cshtml";
+}
+
+    <div>
+        <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+            <div class="col-md-8">
+                <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+                <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+                <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+            </div>
+            <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+                <label id="#ruta">Bienvenido(a)</label>
+                <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+                <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+            </div>
+        </div>
+        <label id="tiempo"></label>
+</div>

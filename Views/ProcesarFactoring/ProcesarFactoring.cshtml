@@ -1,0 +1,193 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "ProcesarFactorig";
+    Layout = "~/mainPage.cshtml";
+}
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+<!--MODALES-->
+<!--Modal Procesando-->
+<div class="modal fade procesando" id="procesarFactoring" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1 class="ml3" style="text-align: center; font-size: 1em;">Generando Factoring por favor espere</h1>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal Días Vacíos-->
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaDias">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que no haya dejado el campo días vacío
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<!--Modal Celdas Vacías-->
+<div class="modal fade" tabindex="-1" role="dialog" id="contarChecked">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que al menos se haya seleccionado una factura
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        FACTURAS FACTORIZABLES
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+
+<div class="card" style="animation-delay: 1.5s;">
+    <div class="card-body">
+        <div class="row" style="padding:20px 20px 20px 20px;">
+            <div class="col-md-3"></div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="mesOperacion">MES</label>
+                    <select id="mesOperacion" name="Tipo" class="custom-select form-control" style="height:32px;">
+                        <option>ENERO</option>
+                        <option>FEBRERO</option>
+                        <option>MARZO</option>
+                        <option>ABRIL</option>
+                        <option>MAYO</option>
+                        <option>JUNIO</option>
+                        <option>JULIO</option>
+                        <option>AGOSTO</option>
+                        <option>SEPTIEMBRE</option>
+                        <option>OCTUBRE</option>
+                        <option>NOVIEMBRE</option>
+                        <option>DICIEMBRE</option>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="">FECHA</label>
+                    <input class="form-control" id="fechaFactoring" autocomplete="off" name="date" onkeypress="return isDate(event)" onfocusout="checkVacio(this)" />
+                </div>
+            </div>
+            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                <div class="form-group">
+                    <label for="num_Operacion">N° OPERACIÓN:</label>
+                    <input class="form-control" readonly id="num_Operacion" value=@Model.codFactoring />
+                </div>
+            </div>
+            <div class="col-md-4" style="padding: 0px 5px 0px 0px;">
+                <label for="mesOperacion" style="margin-left: 0px;">BANCO: </label>
+                <select class="form-control" id="banco" style="height:32px;">
+                    @foreach (BuscarBanco banco in Model.listBancos)
+                    {
+                        <option>@banco.Nom_Banco</option>
+                    }
+
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12" style="width: 100%;">
+                <div class="form-group">
+                    <label for="">Buscar por:</label>
+                    <input class="form-control" type="text" id="myInput" onkeyup="myFunction()" placeholder="Número de factura..">
+                </div>
+            </div>
+        </div>
+        <div class="row" style="padding-left: 20px; padding-right: 20px;">
+            <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px; width: 100%;">
+                <table class="table table-bordered table-striped mb-0" id="tbl-facturas">
+                    <thead>
+                        <tr>
+                            <th>
+                                Seleccionar
+                            </th>
+                            <th>N° Factura</th>
+                            <th>Días</th>
+                            <th>Emisión</th>
+                            <th>Vencimiento</th>
+                            <th>Vencimiento Factoring</th>
+                            <th>Razón Social</th>
+                            <th>RUT</th>
+                            <th>Auxiliar</th>
+                            <th>Nota Crédito</th>
+                            <th>Monto</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (ProcesarFactoring factoring in Model.listFactoring)
+                        {
+                            <tr onclick="vFila(this)">
+                                <td>
+                                    <input type="checkbox" id="selecciando" />
+                                </td>
+                                <td>@factoring.Folio</td>
+                                <td class="diasc" style="width: 80px;"></td>
+                                <td>@factoring.Fecha_Emision.ToString("dd/MM/yyyy")</td>
+                                <td class="center">@factoring.Fecha_Vencimiento_Original.ToString("dd/MM/yyyy")</td>
+                                <td class="center"></td>
+                                <td>@factoring.Empresa</td>
+                                <td>@factoring.Rut</td>
+                                <td>@factoring.Auxiliar</td>
+                                <td>@factoring.N_Credito</td>
+                                <td style="text-align: right;">@factoring.Saldo.ToString("#,0")</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 20px; width: 100%;">
+            <div class="col-md-2">
+                <button type="submit" id="sendArray" class="btn btn-primary" style="width: 100%;">Procesar</button>
+            </div>
+            <div class="col-md-8"></div>
+            <div class="col-md-1 text-right">
+                <label>Total: </label>
+            </div>
+            <div class="col-md-1" style="padding-left: 0px; padding-right: 0px; width: 85px;">
+                <input type="text" id="total" readonly value="0.0" style="text-align: right; width: 100%" />
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    //let total = 0;
+    //let fila = 0;
+    //let nfactura = false;
+</script>
+

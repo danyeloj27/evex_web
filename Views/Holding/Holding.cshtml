@@ -1,0 +1,189 @@
+﻿@model ecosystem.Models.Holding
+
+@{
+    ViewBag.Title = "Holding";
+    Layout = "~/mainPage.cshtml";
+}
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="mensajeAlertaEstadoHolding">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row">
+                        <label id="msgHolding1" style="font-weight: bold; padding-left: 15px;"></label>
+                    </div>
+                    <div class="row">
+                        <label id="msgHolding2" style="padding-left: 15px; text-align:center; width: 100%;"></label>
+                    </div>
+                    <div>
+                        <label id="msgHolding3" style="font-weight: bold; text-align:center; width: 100%;"></label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="aceptarMensajeEstadoHolding" class="btn btn-info" data-dismiss="modal">Aceptar</button>
+                    <button type="button" id="cerrarMensajeEstadoHolding" class="btn btn-danger">Cancelar</button>
+                </div>
+            </div>
+
+        </div><!-- /.modal -->
+    </div>
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        INGRESO DE HOLDINGS
+    </div>
+    <div class="col-md-1 triangle-bottomleft" >
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+<!--Ventana Modal Registro Holding-->
+<div class="modal fade" id="datosHolding" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="collapsed card-link">
+                        <p class="font-weight-bold">HOLDING</p>
+                    </a>
+                </div>
+                <div id="registroHolding" class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-2" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">RUT</label>
+                                    <input class="form-control" id="Rut" autocomplete="off" onkeyup="checkRut(this)" maxlength="10" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Razón Social</label>
+                                    <input class="form-control" id="Razon_Social" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                            <div class="col-md-5" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Nombre de Fantasia</label>
+                                    <input class="form-control" id="Nom_Fantasia" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Dirección</label>
+                                    <input class="form-control" id="Direccion" autocomplete="off" onfocusout="checkVacio(this)">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12" style="padding: 0px 5px 0px 0px;">
+                                <div class="form-group">
+                                    <label for="">Observaciones</label>
+                                    <input class="form-control" id="Obs" autocomplete="off">
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                    <div class="col-md-10"></div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="cerrarHolding" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem; width: 100%;">Cerrar</button>
+                    </div>
+                    <div class="col-md-1" style="padding-right: 0px;">
+                        <button id="guardarHolding" type="button" class="btn btn-info" style="margin-bottom: 20px; font-size: 0.85rem; width: 100%;" data-dismiss="modal">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" tabindex="-1" role="dialog" id="alertaCamposVaciosHolding">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                <label id="mensajeVacioHolding"></label>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="modalCambioEstadoHolding" class="modal fade modal-open animated" tabindex="-1" data-focus-on="input:first" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content" style="padding: 15px;">
+            <div class="card" style="margin-bottom: 5px;">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse">
+                        <p class="font-weight-bold">INDIQUE UN MOTIVO</p>
+                    </a>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <label for="">Detalle el motivo por el cual está realizando el cambio de Estado</label>
+                        <div class="input-group">
+                            <textarea id="motivoCambioEstadoHolding" type="text" rows="3" class="form-control" autocomplete="off"></textarea>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+                        <button id="guardarCambioEstadoHolding" type="button" class="btn btn-info" style="margin-right: 5px; font-size: 0.85rem;">Guardar</button>
+                        <button id="cerrarCambioEstadorHolding" type="button" class="btn btn-light" style="margin-right: 5px; font-size: 0.85rem;">Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Pantalla Principal-->
+
+    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+        <div class="col-md-9" style="padding: 0px 5px 0px 0px;">
+        </div>
+        <div class="col-md-2" style="padding: 0px 0px 0px 0px; margin-left: 6px; padding-left: 45px; padding-right: 10px;">
+            <button id="nuevoHolding" type="button" class="btn btn-success" data-dismiss="modal" style="margin-right: 5px; margin-top: 32px; font-size: 0.85rem; width: 100%;" data-toggle="modal" data-target="#listaHolding"><i class="fas fa-plus"></i> Nuevo Holding</button>
+        </div>
+        <div class="col-md-1" style="padding: 0px 5px 0px 0px;">
+        </div>
+    </div>
+
+    <div class="row" style="margin-top: 15px; margin-left:15px; margin-right: 15px;">
+        <div class="container" style="padding-top: 0px;">
+            <table id="tbl-Holding" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%;">
+            </table>
+        </div>
+    </div>
+
+
+<script>
+
+
+
+
+
+
+</script>
+

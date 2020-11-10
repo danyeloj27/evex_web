@@ -1,0 +1,394 @@
+﻿@using ecosystem.Models
+
+@{
+    ViewBag.Title = "BuscarFactoring";
+    Layout = "~/mainPage.cshtml";
+    var i = 0;
+}
+
+
+<div>
+    <div class="row" style="padding-right: 5px;margin-right: 0px;margin-left: 0px;">
+        <div class="col-md-8">
+            <label id="#empresaconf" style="color: white;">@ViewBag.ConductoresConf</label>
+            <label id="#perfil" style="color: white;">@ViewBag.Perfil</label>
+            <label id="#correoUsuario" style="color: white;">@ViewBag.Correo</label>
+        </div>
+        <div align="right" class="col-md-4" style="padding: 10px 5px 0px 0px; font-size: 0.93rem;">
+            <label id="#ruta">Bienvenido(a)</label>
+            <label id="#usuario" style="font-weight: bold;">@ViewBag.Usuario</label>
+            <button id="salirUsuario" data-toggle="tooltip" data-placement="bottom" title="Cerrar Sesión" class="btn" style="color: #009900; font-size: 25px; padding-left: 0px; padding-right: 0px; padding-bottom: 10px;"><i class="fas fa-sign-out-alt"></i></button>
+        </div>
+    </div>
+</div>
+
+<div class="row animated slideInRight" style="margin-top: 15px; margin-left:5px; margin-right: 5px; background-color: #f8f9fa ; color: white; padding-left: 5px; font-weight: bold; font-size: 1.1rem; font-style: italic; text-align: center;">
+    <div class="col-md-3" style="background-color: #28a745; padding-top: 10px; padding-right: 0px;">
+        BUSCAR FACTORING
+    </div>
+    <div class="col-md-1 triangle-bottomleft">
+    </div>
+    <div class="col-md-8">
+    </div>
+</div>
+<!--Ventana Modal Buscar Factura // DATATABLE-->
+<div class="modal fade" id="facturasFactoring1" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    Facturas Procesadas
+                </div>
+                <div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="panel-body" style="padding-top: 0px; width: 100%;">
+                        <table id="tbl-facturasf" class="table table-striped table-bordered customtable customtable" cellspacing="0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th>Número</th>
+                                    <th id="razon1">Razón Social</th>
+                                    <th>Emisión</th>
+                                    <th>Vencimiento</th>
+                                    <th>Factoring</th>
+                                    <th>Monto</th>
+                                    <th>Mes</th>
+                                    <th>Operación</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="cerrarListaFacturas1" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Ver Operaciones // DATATABLE-->
+<div class="modal fade" id="listaFactoring1" style="z-index: 1100;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="card">
+                <div class="card-header">
+                    Ver Operación
+                </div>
+                <div class="card-body" style="padding-top: 20px; padding-bottom: 20px;">
+                    <div class="panel-body" style="padding-top: 0px; width: 100%;">
+                        <table id="tbl-cabecera1" class="table table-striped table-bordered customtable" cellspacing="0" style="width:100%">
+                            <thead>
+                                <tr>
+                                    <th id="numero1">Número</th>
+                                    <th>Total</th>
+                                    <th>Banco</th>
+                                    <th>Fecha</th>
+                                    <th>Mes</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="button" id="cerrarListaOperaciones1" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Mensaje Checked Vacíos-->
+<div class="modal fade" id="#contarChecked1" style="z-index: 1100;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que al menos se haya seleccionado una factura
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="eliminarFactoring1" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Mensaje Días Vacíos-->
+<div class="modal fade procesando" id="#agregarFacturas1" style="z-index: 1600;" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h1 class="ml31" style="text-align: center; font-size: 1em;">Agregando Facturas por favor espere</h1>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Mensaje Días Vacíos-->
+<div class="modal fade" id="#alertaDias1" style="z-index: 1600;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                Verifique que no haya dejado el campo días vacío
+            </div>
+            <div class="modal-footer">
+                <button id="cerrarDias1" type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Mensaje Eliminar Operación-->
+<div class="modal fade" id="#eliminarOperacion1" style="z-index: 1600;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header modal-header-danger">
+                <h5 class="modal-title">Alerta</h5>
+            </div>
+            <div class="modal-body">
+                ¿Está seguro que desea eliminar este factoring?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="button" id="eliminarFactoringDef1" class="btn btn-danger" data-dismiss="modal">Aceptar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Ventana Modal Facturas Factorizables-->
+<div class="modal modal fade" id="myModal1">
+    <div class="modal-dialog modal-xl" style="width: 1280px;">
+        <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h5 class="modal-title">Facturas Factorizables</h5>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-1" style="margin-bottom: 20px;">
+                        <label style="margin-left: 0px;">Buscar por: </label>
+                    </div>
+                    <div class="col-md-11" style="margin-bottom: 20px;">
+                        <input class="form-control" type="text" id="myInput1" onkeyup="myFunction()" placeholder="Número de factura..">
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-body table-wrapper-scroll-y my-custom-scrollbar" style="padding-top: 0px;">
+
+                        <table class="table table-bordered table-striped mb-0 customtable" id="tbl-facturasfac" style="font-size: 85%">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Seleccionar
+                                    </th>
+                                    <th>N° Factura</th>
+                                    <th style="width: 20px;">Días</th>
+                                    <th>Emisión</th>
+                                    <th>Vencimiento</th>
+                                    <th>Vencimiento Factoring</th>
+                                    <th>Razón Social</th>
+                                    <th>RUT</th>
+                                    <th>Auxiliar</th>
+                                    <th>Nota Crédito</th>
+                                    <th>Monto</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <!-- pendiente que se trae las facturas sin contar las que elimine aqui debería ser un DATATABLE-->
+                                @foreach (ProcesarFactoring facturas in Model.listFacturas)
+                                {
+                                    <tr onclick="vFilaFactoring(this)">
+                                        <td>
+                                            <input type="checkbox" id="selecciando1" />
+                                        </td>
+                                        <td>@facturas.Folio</td>
+                                        <td class="diasc1" style="padding: 10px 0;"></td>
+                                        <td>@facturas.Fecha_Emision.ToString("dd/MM/yyyy")</td>
+                                        <td class="center">@facturas.Fecha_Vencimiento_Original.ToString("dd/MM/yyyy")</td>
+                                        <td class="center"></td>
+                                        <td>@facturas.Empresa</td>
+                                        <td>@facturas.Rut</td>
+                                        <td>@facturas.Auxiliar</td>
+                                        <td>@facturas.N_Credito</td>
+                                        <td style="text-align: right;">@facturas.Saldo.ToString("#,#")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row" style="width: 100%; margin-top: 15px;">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-2 text-right">
+                            <label>Sub-Total: </label>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px; padding-right: 0px;">
+                            <input type="text" id="total1" readonly value="0.0" style="text-align: right; width: 100%" />
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row" style="width: 100%; margin-top: 15px;">
+                        <div class="col-md-9"></div>
+                        <div class="col-md-2 text-right">
+                            <label>Total: </label>
+                        </div>
+                        <div class="col-md-1" style="padding-left: 0px; padding-right: 0px;">
+                            @foreach (BuscarParametro encabezado in Model.encabezado)
+                            {
+                                <label id="totalg1">@encabezado.Total.ToString("#,#")</label>
+                            }
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="submit" id="sendArray1" class="btn btn-primary">Agregar</button>
+                <button type="button" id="closeArray1" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!--Formulario Principal-->
+
+<div class="card" style="margin-top: 25px; animation-delay: 1.5s;">
+    <div class="card-body" style="padding-top: 0px; padding-bottom: 0px;">
+        <div class="container-fluid" id="page-inner1" style="padding-top: 0px; padding-bottom: 0px;">
+            <div class="row">
+                <div class="panel panel-default">
+                    @foreach (BuscarParametro encabezado in Model.encabezado)
+                    {
+                        i++;
+                        <div class="row">
+                            <label for="mesOperacion" style="font-weight: bold;">MES: </label>
+                            <label id="mes_Operacion1">@encabezado.Mes_Operacion</label>
+                        </div>
+                        <div class="row">
+                            <label style="font-weight: bold;">FECHA OPERACIÓN: </label>
+                            <label id="fec_Operacion1">@encabezado.Fecha_Operacion.ToString("dd/MM/yyyy")</label>
+                        </div>
+                        <div class="row">
+                            <label style="font-weight: bold;">N° OPERACIÓN: </label>
+                            <label id="num_Operacion1">@encabezado.Numero_Operacion</label>
+                        </div>
+                        <div class="row">
+                            <label for="mesOperacion" style="font-weight: bold;">BANCO: </label>
+                            <label id="ban_Operacion1">@encabezado.Banco</label>
+                        </div>
+                    }
+                    @if (i == 0)
+                    {
+                        <div class="row">
+                            <label for="mesOperacion1" style="font-weight: bold;">MES: </label>
+                        </div>
+                        <div class="row">
+                            <label style="font-weight: bold;">FECHA OPERACIÓN: </label>
+                        </div>
+                        <div class="row">
+                            <label style="font-weight: bold;">N° OPERACIÓN: </label>
+                            <label id="num_Operacion1"></label>
+                        </div>
+                        <div class="row">
+                            <label for="mesOperacion1" style="font-weight: bold;">BANCO: </label>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="style1" style="margin-top: 0px;">
+    <div class="card-body">
+        <div class="container-fluid" style="margin-top: 5px;" id="page-inner1">
+            <div class="row">
+                <div class="col-md-2" style="padding-left: 0px;">
+                    <button type="button" id="buscarListaFactoring1" class="btn btn-info" data-toggle="modal" data-target="#listaFactoring1" style="width: 100%"><i class="fa fa-search"></i> Ver Operación</button>
+                </div>
+                <div class="col-md-2" style="padding-left: 0px;">
+                    <button type="button" id="buscarFacturasFactoring1" class="btn btn-info" data-toggle="modal" data-target="#facturasFactoring1" style="width: 100%;" ;"><i class="fa fa-search"></i> Buscar Factura</button>
+                </div>
+                <div class="col-md-6"></div>
+                <div class="col-md-2" style="padding-right: 0px;">
+                    <button type="button" id="agregarFactura1" class="btn btn-info add-new" data-toggle="modal" data-target="#myModal1" style="width: 100%;"><i class="fa fa-plus"></i> Agregar Factura</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="panel-body" style="padding-top: 20px; width: 100%;">
+                    <table class="table table-striped table-bordered customtable" id="tbl-factoring1">
+                        <thead>
+                            <tr>
+                                <th>Acción</th>
+                                <th>N° Factura</th>
+                                <th>Días</th>
+                                <th>Emisión(s)</th>
+                                <th>Vencimiento</th>
+                                <th>Vencimiento Factoring</th>
+                                <th>Razón Social</th>
+                                <th>RUT</th>
+                                <th>Auxiliar</th>
+                                <th>Monto</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (BuscarFactoring factoring in Model.listFactoring)
+                            {
+                                <tr onclick="vFilaFactoring(this)">
+                                    <td style="padding-left: 0px;padding-right: 0px;">
+                                        <a class="addFactoring" title="Guardar" data-toggle="tooltip"><i class="material-icons" style="color: #27c46b;">&#xE03B;</i></a>
+                                        <a class="editFactoring" title="Editar cantidad de días" data-toggle="tooltip"><i class="material-icons" style="color: #007bff;">&#xE254;</i></a>
+                                        <a class="deleteFactoring" title="Borrar Factura" data-toggle="tooltip"><i class="material-icons" style="color: #E34724;">&#xE872;</i></a>
+                                        <a class="exportarFactoring" title="Exportar Factura PDF" data-toggle="tooltip"><i class="material-icons" style="color: #27c46b;">&#xe415;</i></a>
+                                        <a class="exportarxmlFactoring" title="Exportar Archivo XML" data-toggle="tooltip"><i class="material-icons" style="color: #27c46b;">&#xe2c0;</i></a>
+                                    </td>
+                                    <td class="center">@factoring.Num_Factura</td>
+                                    <td id="diasf1" class="center" style="width: 70px;">@factoring.Dias_Credito_Factoring</td>
+                                    <td class="center">@factoring.Fecha_Emision.ToString("dd/MM/yyyy")</td>
+                                    <td class="center">@factoring.Fecha_Venc.ToString("dd/MM/yyyy")</td>
+                                    <td class="center">@factoring.Fecha_Venc_Factoring.ToString("dd/MM/yyyy")</td>
+                                    <td class="center">@factoring.Razon_social</td>
+                                    <td class="center">@factoring.Rut</td>
+                                    <td class="center">@factoring.Cod_auxiliar</td>
+                                    <td class="center" style="text-align: right;">@factoring.Monto.ToString("#,#")</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    @foreach (BuscarParametro encabezado in Model.encabezado)
+                    {
+                        <label>Total: </label>
+                        <label id="totalFactoring1">@encabezado.Total.ToString("#,#")</label>
+                    }
+                </div>
+                <br>
+                <div class="col-md-2" style="padding-left: 0px;"><button type="button" id="exportarExcel1" class="btn btn-primary" style="width: 100%;" disabled>Exportar Factoring</button></div>
+                <div class="col-md-2" style="padding-left: 0px;"><button type="button" id="exportarFacturas1" class="btn btn-primary" style="width: 100%;" disabled>Descargar Todo</button></div>
+                <div class="col-md-6"></div>
+                <div class="col-md-2" style="padding-right: 0px;"><button type="button" id="deleteArray1" class="btn btn-danger" style="width: 100%" disabled>Eliminar</button></div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    /*function myFunction() {
+    var input, filter, table, tr, td, i, txtValue;
+    input = document.getElementById("myInput1");
+    filter = input.value.toUpperCase();
+    table = document.getElementById("tbl-facturasf");
+    tr = table.getElementsByTagName("tr");
+    for (i = 0; i < tr.length; i++) {
+      td = tr[i].getElementsByTagName("td")[1];
+      if (td) {
+        txtValue = td.textContent || td.innerText;
+        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+          tr[i].style.display = "";
+        } else {
+          tr[i].style.display = "none";
+        }
+      }
+    }
+  }*/
+</script>
